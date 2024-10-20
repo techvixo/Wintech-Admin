@@ -8,6 +8,13 @@ import EmailVarify from "../Pages/Shared/Login/OTPLogin";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import VarificationRoute from "./VarificationRoute/VarificationRoute";
 import Settings from "../Pages/Settings/Settings";
+import Banners from "../Pages/Banners/Banners";
+import Products from "../Pages/Products/Products";
+import AboutUs from "../Pages/AboutUs/AboutUs";
+import Portfolios from "../Pages/Portfolios/Portfolios";
+import Blogs from "../Pages/Blogs/Blogs";
+import HomePage from "../Pages/HomePage/HomePage";
+import Message from "../Pages/Message/Message";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +38,7 @@ const router = createBrowserRouter([
         path: "/banner",
         element: (
           <PrivateRoute>
-            <p>Banner</p>
+            <Banners></Banners>
           </PrivateRoute>
         ),
       },
@@ -39,7 +46,7 @@ const router = createBrowserRouter([
         path: "/products",
         element: (
           <PrivateRoute>
-            <p>Product</p>
+            <Products></Products>
           </PrivateRoute>
         ),
       },
@@ -47,7 +54,7 @@ const router = createBrowserRouter([
         path: "/about",
         element: (
           <PrivateRoute>
-            <p>About</p>
+            <AboutUs></AboutUs>
           </PrivateRoute>
         ),
       },
@@ -55,7 +62,7 @@ const router = createBrowserRouter([
         path: "/portfolio",
         element: (
           <PrivateRoute>
-            <p>portfolio</p>
+           <Portfolios></Portfolios>
           </PrivateRoute>
         ),
       },
@@ -63,7 +70,7 @@ const router = createBrowserRouter([
         path: "/blog",
         element: (
           <PrivateRoute>
-            <p>Blog</p>
+           <Blogs></Blogs>
           </PrivateRoute>
         ),
       },
@@ -71,7 +78,7 @@ const router = createBrowserRouter([
         path: "/home",
         element: (
           <PrivateRoute>
-            <p>home</p>
+            <HomePage></HomePage>
           </PrivateRoute>
         ),
       },
@@ -79,7 +86,7 @@ const router = createBrowserRouter([
         path: "/message",
         element: (
           <PrivateRoute>
-            <p>message</p>
+           <Message></Message>
           </PrivateRoute>
         ),
       },
