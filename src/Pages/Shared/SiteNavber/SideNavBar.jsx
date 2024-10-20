@@ -14,7 +14,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { GiLoveSong } from "react-icons/gi";
 import { FaMusic } from "react-icons/fa";
-import logo from "../../assets/logo/logo.png";
+import logo from "../../../assets/logo/logo.png";
 
 const SideNavBar = () => {
   const navigation = useNavigate();
