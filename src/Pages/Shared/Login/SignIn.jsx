@@ -86,8 +86,8 @@ const SignIn = () => {
   // },[])
   return (
     <div className="md:h-screen flex justify-center items-center">
-      <div className="w-11/12 mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 bg-white rounded-md shadow-lg">
+      <div className="w-5/6 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white rounded-md shadow-lg">
           <div className="img w-full">
             <img src={img} className=" w-full md:rounded-l-md" alt="img" />
           </div>
@@ -168,7 +168,7 @@ const SignIn = () => {
                     <span className="label-text">Remember me</span>
                     <input
                       type="checkbox"
-                      className="checkbox checkbox-sm checkbox-success"
+                      className="checkbox checkbox-sm checkbox-info"
                     />
                   </label>
                 </div>
@@ -191,14 +191,6 @@ const SignIn = () => {
               </div>
             </form>
             <div>
-              <div className="text-center p-1 mt-4 text-sm">
-                <span>Don't have an Account?</span>{" "}
-                <span>
-                  <Link to="/sign-up" className="text-[#1A73E7] font-semibold">
-                    Sign Up
-                  </Link>
-                </span>
-              </div>
             </div>
           </div>
         </div>

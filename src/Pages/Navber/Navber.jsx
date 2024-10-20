@@ -9,18 +9,23 @@ import { FaUserShield } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { GoHome } from "react-icons/go";
 import adminProfileImg from "../../../src/assets/profile/admin-profile-img.jpg";
-import { useLocation } from 'react-router-dom';
-
+import { useLocation } from "react-router-dom";
+import { IoSettingsSharp } from "react-icons/io5";
+import { IoNotificationsSharp } from "react-icons/io5";
+import { FaUserCircle } from "react-icons/fa";
 const Navber = () => {
   const [authenticated, setAuthenticated] = useState("");
   const token = localStorage.getItem("token");
   const id = localStorage.getItem("user_id");
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Split the pathname by "/" and get the last part
-  const pathSegments = location?.pathname?.split('/');
-  const routerName = location?.pathname === '/' ? 'Overview' : pathSegments[pathSegments?.length - 1];
+  const pathSegments = location?.pathname?.split("/");
+  const routerName =
+    location?.pathname === "/"
+      ? "Overview"
+      : pathSegments[pathSegments?.length - 1];
   // <<<<<<<<< Profile info Data Recived >>>>>>>>>>
   const { data: profileData = [], isLoading } = useQuery({
     queryKey: ["profileData"],
@@ -64,21 +69,17 @@ const Navber = () => {
         <div className="w-1/2">
           <p className="flex items-center gap-2 md:font-semibold text-xs">
             <span className="font-semibold text-xl">
-            <GoHome />
+              <GoHome />
             </span>
-            <span> /  Pages </span>
-            <span>
-              /
-            </span>
-            <span className="capitalize" >
-            {routerName}
-            </span>
+            <span> / Pages </span>
+            <span>/</span>
+            <span className="capitalize">{routerName}</span>
           </p>
           <h2 className="text-xl md:text-xl font-bold uppercase text-[#252B42] ">
-          {routerName}
+            {routerName}
           </h2>
         </div>
-        <div className="flex items-center justify-end gap-1 w-1/2">
+        <div className="flex items-center justify-end gap-5 w-1/2">
           <div className="form-control">
             <input
               type="text"
@@ -88,21 +89,8 @@ const Navber = () => {
           </div>
           {/* This section for Profile manu  */}
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-8 rounded-full">
-                {isLoading ? (
-                  <img src={adminProfileImg} />
-                ) : (
-                  <>
-                    {" "}
-                    {profileData?.data?.image ? (
-                      <img src={profileData?.data?.image} />
-                    ) : (
-                      <img src={adminProfileImg} />
-                    )}
-                  </>
-                )}
-              </div>
+            <label tabIndex={0} className="text-xl text-[#7B809A] hover:text-[#4179B6] transition cursor-pointer">
+            <FaUserCircle />
             </label>
             <ul
               tabIndex={0}
@@ -140,28 +128,14 @@ const Navber = () => {
               )}
             </ul>
           </div>
+          {/* This section for Settings  */}
+          <Link to="/settings" className="text-xl text-[#7B809A] hover:text-[#4179B6] transition cursor-pointer">
+            <IoSettingsSharp />
+          </Link>
           {/* This section for Notification  */}
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <button className="btn btn-xs btn-ghost btn-circle">
-                <div className="indicator">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                    />
-                  </svg>
-                  <span className="badge badge-xs badge-primary indicator-item"></span>
-                </div>
-              </button>
+            <label tabIndex={0} className="text-xl text-[#7B809A] hover:text-[#4179B6] transition cursor-pointer">
+            <IoNotificationsSharp />
             </label>
             <div
               tabIndex={0}

@@ -92,7 +92,7 @@ const EmailVarify = () => {
 console.log(verificationCode);
   return (
     <div className="md:h-screen flex justify-center items-center">
-      <div className="w-11/12 mx-auto">
+      <div className="w-5/6 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 bg-white rounded-md shadow-lg">
           <div className="img w-full">
             <img src={img} className=" w-full md:rounded-l-md" alt="img" />
@@ -151,10 +151,10 @@ console.log(verificationCode);
             </form>
             <div>
               <div className="text-center p-1 mt-4 text-sm">
-                <span>Dont have an Account?</span>{" "}
+                <span>Back to  </span>{" "}
                 <span>
-                  <Link to="/sign-up" className="text-[#1A73E7] font-semibold">
-                    Sign Up
+                  <Link to="/login" className="text-[#1A73E7] font-semibold">
+                   Login
                   </Link>
                 </span>
               </div>

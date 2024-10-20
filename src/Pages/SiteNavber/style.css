@@ -16,7 +16,7 @@
   }
   
 .navbar-section-main {
-    height: 100vh;
+    height: 100%;
     overflow-y: scroll;
     /* position: fixed; */
 }

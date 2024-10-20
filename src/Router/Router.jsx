@@ -2,12 +2,12 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../Layouts/DashboardLayout/DashboardLayout";
 import Error from "../Pages/Error/Error";
 import SignIn from "../Pages/Shared/Login/SignIn";
-import SignUp from "../Pages/Shared/SignUp/SignUp";
 import ForgetPassword from "../Pages/Shared/ForgetPassword/ForgetPassword";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import EmailVarify from "../Pages/Shared/Login/OTPLogin";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import VarificationRoute from "./VarificationRoute/VarificationRoute";
+import Settings from "../Pages/Settings/Settings";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +83,14 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/settings",
+        element: (
+          <PrivateRoute>
+           <Settings></Settings>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   // {
@@ -107,10 +115,6 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <SignIn></SignIn>,
-  },
-  {
-    path: "/sign-up",
-    element: <SignUp></SignUp>,
   },
   {
     path: "/email-verify",

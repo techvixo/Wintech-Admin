@@ -10,7 +10,7 @@ const DashboardLayout = ({ children }) => {
       </div>
       <div className="dashboard_right_site w-4/5">
         <Navber></Navber>
-        <div className="p-5">
+        <div className="p-3 px-6">
           <Outlet></Outlet>
         </div>
       </div>
