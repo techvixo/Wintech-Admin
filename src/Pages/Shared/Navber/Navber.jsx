@@ -8,7 +8,6 @@ import { HiOutlineLogout } from "react-icons/hi";
 import { FaUserShield } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { GoHome } from "react-icons/go";
-import adminProfileImg from "../../../src/assets/profile/admin-profile-img.jpg";
 import { useLocation } from "react-router-dom";
 import { IoSettingsSharp } from "react-icons/io5";
 import { IoNotificationsSharp } from "react-icons/io5";
