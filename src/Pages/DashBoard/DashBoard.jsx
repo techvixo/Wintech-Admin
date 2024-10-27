@@ -1,9 +1,12 @@
+import QuickAccess from "./QuickAccess/QuickAccess"
+import RecentUpdateFeed from "./RecentUpdateFeed/RecentUpdateFeed"
 
 
 const DashBoard = () => {
   return (
     <div className=''>
-     Hello Wintech
+     <QuickAccess></QuickAccess>
+     <RecentUpdateFeed></RecentUpdateFeed>
     </div>
   )
 }
