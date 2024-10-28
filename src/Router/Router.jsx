@@ -15,6 +15,12 @@ import Portfolios from "../Pages/Portfolios/Portfolios";
 import Blogs from "../Pages/Blogs/Blogs";
 import HomePage from "../Pages/HomePage/HomePage";
 import Message from "../Pages/Message/Message";
+import Home from "../Pages/Banners/Home/Home";
+import Service from "../Pages/Banners/Service/Service";
+import Contact from "../Pages/Banners/Contact/Contact";
+import About from "../Pages/Banners/About/About";
+import Portfolio from "../Pages/Banners/Portfolio/Portfolio";
+import Blog from "../Pages/Banners/Blog/Blog";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +47,36 @@ const router = createBrowserRouter([
             <Banners></Banners>
           </PrivateRoute>
         ),
+        children: [
+          {
+            path: "/banner",
+            element: <Home></Home>
+          },
+          {
+            path: "/banner/home",
+            element: <Home></Home>
+          },
+          {
+            path: "/banner/service",
+            element: <Service></Service>
+          },
+          {
+            path: "/banner/about",
+            element: <About></About>
+          },
+          {
+            path: "/banner/portfolio",
+            element: <Portfolio></Portfolio>
+          },
+          {
+            path: "/banner/blog",
+            element: <Blog></Blog>
+          },
+          {
+            path: "/banner/contact",
+            element: <Contact></Contact>
+          },
+        ],
       },
       {
         path: "/products",

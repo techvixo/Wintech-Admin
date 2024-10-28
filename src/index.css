@@ -29,3 +29,9 @@ select:focus {
   height: 40px;
   padding: 4px 14px;
 }
+
+.banner_menu .active{
+  background-color: white;
+  color: #4179B6;
+  font-weight: bold;
+}

@@ -1,8 +1,12 @@
 import React from 'react'
+import ProductManagement from './ProductManagement/ProductManagement'
 
 const Products = () => {
   return (
-    <div>Products</div>
+    <div className='bg-white p-5 rounded-md shadow-md'>
+
+      <ProductManagement></ProductManagement>
+    </div>
   )
 }
 
