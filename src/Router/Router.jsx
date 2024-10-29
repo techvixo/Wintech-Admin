@@ -21,6 +21,9 @@ import Contact from "../Pages/Banners/Contact/Contact";
 import About from "../Pages/Banners/About/About";
 import Portfolio from "../Pages/Banners/Portfolio/Portfolio";
 import Blog from "../Pages/Banners/Blog/Blog";
+import ManageCategories from "../Pages/Products/ManageCategories/ManageCategories";
+import AddProduct from "../Pages/Products/ProductManagement/AddPorduct";
+import AddCategory from "../Pages/Products/ManageCategories/AddCaterory";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +86,30 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Products></Products>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/products/create",
+        element: (
+          <PrivateRoute>
+            <AddProduct></AddProduct>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/products/category",
+        element: (
+          <PrivateRoute>
+            <ManageCategories></ManageCategories>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/products/category/create",
+        element: (
+          <PrivateRoute>
+            <AddCategory></AddCategory>
           </PrivateRoute>
         ),
       },
