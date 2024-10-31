@@ -35,6 +35,8 @@ import AddPartner from "../Pages/AboutUs/Partners/AddPartner";
 import EditPartner from "../Pages/AboutUs/Partners/EditPartner";
 import AddPortfolio from "../Pages/Portfolios/AddPortfolio";
 import EditPortfolio from "../Pages/Portfolios/EditPortfolio";
+import AddBlog from "../Pages/Blogs/AddBlog";
+import EditBlog from "../Pages/Blogs/EditBlog";
 
 const router = createBrowserRouter([
   {
@@ -233,6 +235,22 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
            <Blogs></Blogs>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/blog/create",
+        element: (
+          <PrivateRoute>
+           <AddBlog></AddBlog>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/blog/edit",
+        element: (
+          <PrivateRoute>
+           <EditBlog></EditBlog>
           </PrivateRoute>
         ),
       },
