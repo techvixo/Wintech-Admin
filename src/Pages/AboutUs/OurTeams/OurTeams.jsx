@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TeamCard from "./TeamCard";
 import SearchAndFilter from "../../Products/SearchAndFilter/SearchAndFilter";
+import AboutMenu from "../AboutMenu";
 
 const OurTeams = () => {
   const ourTeams = [
@@ -36,12 +37,8 @@ const OurTeams = () => {
 
 
   return (
-    <div className="">
-      {/* <h1 className="my-2 font-semibold text-[#344767]">
-        This Page Should Have A Clean, Organized Layout For Admins To Easily
-        View, Edit, Or Remove Products.
-      </h1> */}
-
+    <div className="p-5 bg-white rounded-md shadow-md">
+  <AboutMenu></AboutMenu>
       <div className="flex justify-between items-end">
        <div className="ll">
         <p className="my-2 font-semibold text-[#344767]">Team Member Listing</p>

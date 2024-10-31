@@ -1,22 +1,31 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { FaUsers } from "react-icons/fa";
+import { LiaCertificateSolid } from "react-icons/lia";
+import { FaHandsHelping } from "react-icons/fa";
 
 const AboutMenu = () => {
+  const teamsIcon = <FaUsers />
+  const certificate = <LiaCertificateSolid />
+  const partner =<FaHandsHelping />
  const menuItems = [
   {
     id: 1,
     title: "Our Team",
-    path: "/about"
+    path: "/teams",
+    icon: teamsIcon
   },
   {
     id: 1,
     title: "Certificates",
-    path: "/certificates"
+    path: "/certificates",
+    icon: certificate
   },
   {
     id: 1,
     title: "Partners",
-    path: "/partners"
+    path: "/partners",
+    icon: partner
   }
 ]
   return (
@@ -26,7 +35,7 @@ const AboutMenu = () => {
       {
        menuItems.map((menu, i) => {
         return(
-         <NavLink className="p-1 px-8 text-sm rounded font-semibold " key={i} to={`${menu.path}`}>{menu.title}</NavLink>
+         <NavLink className="p-1 px-8 text-sm rounded font-semibold flex items-center gap-2" key={i} to={`/about${menu.path}`}> <span className='text-md'>{menu.icon}</span>{menu.title}</NavLink>
         )
        })
       }

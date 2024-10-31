@@ -26,6 +26,15 @@ import AddProduct from "../Pages/Products/ProductManagement/AddPorduct";
 import AddCategory from "../Pages/Products/ManageCategories/AddCaterory";
 import AddTeamMember from "../Pages/AboutUs/OurTeams/AddTeam";
 import EditTeamMember from "../Pages/AboutUs/OurTeams/EditTeamMember";
+import OurTeams from "../Pages/AboutUs/OurTeams/OurTeams";
+import Certificates from "../Pages/AboutUs/Certificates/Certificates";
+import AddCertificate from "../Pages/AboutUs/Certificates/AddCertificate";
+import EditCertificate from "../Pages/AboutUs/Certificates/EditCertificate";
+import Partners from "../Pages/AboutUs/Partners/Partners";
+import AddPartner from "../Pages/AboutUs/Partners/AddPartner";
+import EditPartner from "../Pages/AboutUs/Partners/EditPartner";
+import AddPortfolio from "../Pages/Portfolios/AddPortfolio";
+import EditPortfolio from "../Pages/Portfolios/EditPortfolio";
 
 const router = createBrowserRouter([
   {
@@ -124,6 +133,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/about/teams",
+        element: (
+          <PrivateRoute>
+           <OurTeams></OurTeams>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/about/teams/create",
         element: (
           <PrivateRoute>
@@ -140,10 +157,74 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/about/certificates",
+        element: (
+          <PrivateRoute>
+           <Certificates></Certificates>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about/certificates/create",
+        element: (
+          <PrivateRoute>
+           <AddCertificate></AddCertificate>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about/certificates/edit",
+        element: (
+          <PrivateRoute>
+           <EditCertificate></EditCertificate>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about/partners",
+        element: (
+          <PrivateRoute>
+           <Partners></Partners>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about/partners/create",
+        element: (
+          <PrivateRoute>
+           <AddPartner></AddPartner>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about/partners/edit",
+        element: (
+          <PrivateRoute>
+           <EditPartner></EditPartner>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/portfolio",
         element: (
           <PrivateRoute>
            <Portfolios></Portfolios>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/portfolio/create",
+        element: (
+          <PrivateRoute>
+           <AddPortfolio></AddPortfolio>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/portfolio/edit",
+        element: (
+          <PrivateRoute>
+           <EditPortfolio></EditPortfolio>
           </PrivateRoute>
         ),
       },
