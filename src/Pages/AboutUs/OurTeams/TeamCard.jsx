@@ -1,10 +1,11 @@
 import React from "react";
-
+import defaultImg from "../../../assets/default-img.png"
+import { Link } from "react-router-dom";
 const TeamCard = ({team}) => {
   return (
     <div  className="flex flex-col gap-2 rounded-lg shadow p-4">
       <img
-        src="https://via.placeholder.com/150"
+        src={defaultImg}
         alt="team"
         className="w-full h-32 object-cover rounded"
       />
@@ -27,14 +28,13 @@ const TeamCard = ({team}) => {
       {team.University}
       </p>
       <div className="flex items-center gap-3">
-        <button
-          onClick={() => handleEdit(team.id)}
+        <Link to={"/about/teams/edit"}
           className="btn btn-outline btn-info btn-sm px-4"
         >
           Edit
-        </button>
+        </Link>
         <button
-          onClick={() => handleDelete(team.id)}
+          // onClick={() => handleDelete(team.id)}
           className="btn btn-outline btn-error btn-sm px-4"
         >
           Delete

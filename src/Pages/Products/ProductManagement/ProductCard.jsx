@@ -1,10 +1,11 @@
 import React from "react";
+import defaultImg from "../../../assets/default-img.png"
 
 const ProductCard = ({product}) => {
   return (
     <div  className="flex flex-col gap-2 rounded-lg shadow p-4">
       <img
-        src="https://via.placeholder.com/150"
+        src={defaultImg}
         alt="Product"
         className="w-full h-32 object-cover rounded"
       />

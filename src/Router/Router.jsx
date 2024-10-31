@@ -24,6 +24,8 @@ import Blog from "../Pages/Banners/Blog/Blog";
 import ManageCategories from "../Pages/Products/ManageCategories/ManageCategories";
 import AddProduct from "../Pages/Products/ProductManagement/AddPorduct";
 import AddCategory from "../Pages/Products/ManageCategories/AddCaterory";
+import AddTeamMember from "../Pages/AboutUs/OurTeams/AddTeam";
+import EditTeamMember from "../Pages/AboutUs/OurTeams/EditTeamMember";
 
 const router = createBrowserRouter([
   {
@@ -118,6 +120,22 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AboutUs></AboutUs>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about/teams/create",
+        element: (
+          <PrivateRoute>
+           <AddTeamMember></AddTeamMember>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about/teams/edit",
+        element: (
+          <PrivateRoute>
+           <EditTeamMember></EditTeamMember>
           </PrivateRoute>
         ),
       },
