@@ -1,5 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import addProduct from "../../../assets/overview/add-product.png";
+import changeBanner from "../../../assets/overview/change-banner.png";
+import editPortfolio from "../../../assets/overview/edit-portfolio.png";
+import { IoMdTime } from "react-icons/io";
 
 const QuickAccess = () => {
   return (
@@ -35,21 +39,27 @@ const QuickAccess = () => {
             </div>
           </div>
         </div>
-{/* Statistics Cards */}
+        {/* Statistics Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-5">
           <div className="bg-white rounded-md shadow-md p-4 flex flex-col items-center justify-center gap-2">
             <p className="text-4xl font-bold text-[#4179B6]">21</p>
-            <p className="text-gray-600 font-semibold text-sm">Total Website Visit</p>
+            <p className="text-gray-600 font-semibold text-sm">
+              Total Website Visit
+            </p>
             <p className="text-xs text-gray-400">Past 30 Days</p>
           </div>
           <div className="bg-white rounded-md shadow-md p-4 flex flex-col items-center justify-center gap-2">
             <p className="text-4xl font-bold text-[#4179B6]">44</p>
-            <p className="text-gray-600 font-semibold text-sm">New Products Added</p>
+            <p className="text-gray-600 font-semibold text-sm">
+              New Products Added
+            </p>
             <p className="text-xs text-gray-400">Past 30 Days</p>
           </div>
           <div className="bg-white rounded-md shadow-md p-4 flex flex-col items-center justify-center gap-2">
             <p className="text-4xl font-bold text-[#4179B6]">87</p>
-            <p className="text-gray-600 font-semibold text-sm">Recent Blog Post</p>
+            <p className="text-gray-600 font-semibold text-sm">
+              Recent Blog Post
+            </p>
             <p className="text-xs text-gray-400">Past 30 Days</p>
           </div>
           <div className="bg-white rounded-md shadow-md p-4 flex flex-col items-center justify-center gap-2">
@@ -60,31 +70,72 @@ const QuickAccess = () => {
         </div>
 
         {/* Action Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-blue-500 rounded-lg shadow-md p-6 text-white flex flex-col items-center">
-            <div className="text-4xl mb-4">👜</div>
-            <h3 className="font-semibold">ADD NEW PRODUCT</h3>
-            <p className="text-sm mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-5">
+          {/*========== Card No 1============ */}
+          <div className="rounded-lg shadow-md p-3 relative bg-white">
+            <div className=" absolute left-0 top-[-28px] p-3 w-full">
+              <Link to={"/products/create"}>
+              <div
+                className="flex items-center justify-center w-full h-40 rounded-lg"
+                style={{
+                  background: "linear-gradient(to bottom, #509AFA, #1A73E7)",
+                }}
+              >
+                <img src={addProduct} alt="quick-icon" className="w-14" />
+              </div>
+              </Link>
+            </div>
+           <div className="pt-36">
+           <h3 className="font-bold text-[#344767] text-sm">ADD NEW PRODUCT</h3>
+            <p className="text-sm text-[#7B809A] my-1">
               A more detailed chart of website traffic
             </p>
-            <p className="text-xs text-gray-200">📅 campaign sent 2 days ago</p>
+            <p className="text-sm text-[#7B809A] border-t py-3 my-2 mt-4 flex items-center gap-1"><span><IoMdTime /></span>campaign sent 2 days ago</p>
+           </div>
           </div>
-
-          <div className="bg-green-500 rounded-lg shadow-md p-6 text-white flex flex-col items-center">
-            <div className="text-4xl mb-4">🔄</div>
-            <h3 className="font-semibold">CHANGE BANNER</h3>
-            <p className="text-sm mb-4">Change Your Banner</p>
-            <p className="text-xs text-gray-200">📅 updated 4 min ago</p>
-          </div>
-
-          <div className="bg-gray-800 rounded-lg shadow-md p-6 text-white flex flex-col items-center">
-            <div className="text-4xl mb-4">✏️</div>
-            <h3 className="font-semibold">EDIT PORTFOLIO</h3>
-            <p className="text-sm mb-4">
-              A line chart showing the number of views or comments on blog
-              posts.
+  {/*========== Card No 2============ */}
+  <div className="rounded-lg shadow-md p-3 relative bg-white">
+            <div className=" absolute left-0 top-[-28px] p-3 w-full">
+              <Link to={"/banner/home"}>
+              <div
+                className="flex items-center justify-center w-full h-40 rounded-lg"
+                style={{
+                  background: "linear-gradient(to bottom, #63B967, #4BA64F)",
+                }}
+              >
+                <img src={changeBanner} alt="quick-icon" className="w-14" />
+              </div>
+              </Link>
+            </div>
+           <div className="pt-36">
+           <h3 className="font-bold text-[#344767] text-sm">CHANGE BANNER</h3>
+            <p className="text-sm text-[#7B809A] my-1">
+            Change Your Banner
             </p>
-            <p className="text-xs text-gray-400">📅 just updated</p>
+            <p className="text-sm text-[#7B809A] border-t py-3 my-2 mt-4 flex items-center gap-1"><span><IoMdTime /></span>campaign sent 2 days ago</p>
+           </div>
+          </div>
+            {/*========== Card No 3============ */}
+            <div className="rounded-lg shadow-md p-3 relative bg-white">
+            <div className=" absolute left-0 top-[-28px] p-3 w-full">
+              <Link to={"/portfolio"}>
+              <div
+                className="flex items-center justify-center w-full h-40 rounded-lg"
+                style={{
+                  background: "linear-gradient(to bottom, #3E3D45, #202020)",
+                }}
+              >
+                <img src={editPortfolio} alt="quick-icon" className="w-14" />
+              </div>
+              </Link>
+            </div>
+           <div className="pt-36">
+           <h3 className="font-bold text-[#344767] text-sm">EDIT PORTFOLIO</h3>
+            <p className="text-sm text-[#7B809A] my-1">
+            You can add or change your portfolio
+            </p>
+            <p className="text-sm text-[#7B809A] border-t py-3 my-2 mt-4 flex items-center gap-1"><span><IoMdTime /></span>campaign sent 2 days ago</p>
+           </div>
           </div>
         </div>
       </div>
