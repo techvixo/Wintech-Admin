@@ -1,36 +1,15 @@
 import React, { useState } from "react";
 import defaultImg from "../../assets/default-img.png"
 
-const BannerEditor = () => {
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
+const BannerEditor = ({setTitleEn, setSubtitleEn, setTitleCn, setSubtitleCn, setSelectedFile, handler}) => {
   const [imagePreview, setImagePreview] = useState(defaultImg); // Replace with your default image URL
-  const [selectedFile, setSelectedFile] = useState(null);
-
+  
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
       setImagePreview(URL.createObjectURL(file)); // Create a preview URL for the uploaded image
     }
-  };
-
-  const handleSave = () => {
-    // Create a form data object to send the data to a server, if necessary
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("subtitle", subtitle);
-    if (selectedFile) {
-      formData.append("image", selectedFile);
-    }
-
-    // Example save action
-    console.log("Form Data:", {
-      title,
-      subtitle,
-      selectedFile,
-    });
-    // Reset the form or send `formData` to your API
   };
 
   return (
@@ -53,16 +32,34 @@ const BannerEditor = () => {
         <div className="flex items-center justify-between mb-2">
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
+            // value={title}
+            onChange={(e) => setTitleEn(e.target.value)}
+            placeholder="Title in English"
             className="w-full p-2 mb-2 border border-gray-300 rounded"
           />
         </div>
         <textarea
-          value={subtitle}
-          onChange={(e) => setSubtitle(e.target.value)}
-          placeholder="Subtitle"
+          // value={subtitle}
+          onChange={(e) => setSubtitleEn(e.target.value)}
+          placeholder="Subtitle in English"
+          className="w-full p-2 mb-4 border border-gray-300 rounded"
+          rows="4"
+        />
+
+        {/* Input Fields */}
+        <div className="flex items-center justify-between mb-2 mt-8">
+          <input
+            type="text"
+            // value={title}
+            onChange={(e) => setTitleCn(e.target.value)}
+            placeholder="Title in Chinese"
+            className="w-full p-2 mb-2 border border-gray-300 rounded"
+          />
+        </div>
+        <textarea
+          // value={subtitle}
+          onChange={(e) => setSubtitleCn(e.target.value)}
+          placeholder="Subtitle in Chinese"
           className="w-full p-2 mb-4 border border-gray-300 rounded"
           rows="4"
         />
@@ -83,7 +80,7 @@ const BannerEditor = () => {
             <span className="text-xl mr-1">+</span> Upload New Image
           </label>
           <button
-            onClick={handleSave}
+            onClick={handler}
             className="bg-blue-500 text-white px-6 uppercase py-2 rounded shadow-md"
           >
             Save
