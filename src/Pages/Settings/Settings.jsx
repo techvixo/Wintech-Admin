@@ -65,7 +65,7 @@ const Settings = () => {
       setLoginLoading(false);
       return response.data;
     } catch (error) {
-      toast.error(`${error.response.data.message}`, {
+      toast.error(`${error.response.data.error}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -78,7 +78,7 @@ const Settings = () => {
 
       console.log(error.response.data);
       setLoginLoading(false);
-      throw new Error(error.response.data.message);
+      throw new Error(error.response.data.error);
     }
   };
   return (
