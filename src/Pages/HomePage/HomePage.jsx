@@ -1,8 +1,11 @@
 import React from 'react'
+import HomeMenu from './HomeMenu'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div className='p-5 bg-white rounded-md shadow-md'>
+      <HomeMenu></HomeMenu>
+    </div>
   )
 }
 

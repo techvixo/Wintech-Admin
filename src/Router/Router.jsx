@@ -37,6 +37,9 @@ import AddPortfolio from "../Pages/Portfolios/AddPortfolio";
 import EditPortfolio from "../Pages/Portfolios/EditPortfolio";
 import AddBlog from "../Pages/Blogs/AddBlog";
 import EditBlog from "../Pages/Blogs/EditBlog";
+import OurMachine from "../Pages/HomePage/Machines/OurMechine";
+import EditMachine from "../Pages/HomePage/Machines/EditMachine";
+import AddMachine from "../Pages/HomePage/Machines/AddMachine";
 
 const router = createBrowserRouter([
   {
@@ -256,6 +259,38 @@ const router = createBrowserRouter([
       },
       {
         path: "/home",
+        element: (
+          <PrivateRoute>
+            <HomePage></HomePage>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/home/machine",
+        element: (
+          <PrivateRoute>
+            <OurMachine></OurMachine>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/home/machine/create",
+        element: (
+          <PrivateRoute>
+            <AddMachine></AddMachine>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/home/machine/edit",
+        element: (
+          <PrivateRoute>
+            <EditMachine></EditMachine>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/home/featured-video",
         element: (
           <PrivateRoute>
             <HomePage></HomePage>

@@ -70,7 +70,7 @@ const QuickAccess = () => {
         </div>
 
         {/* Action Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3">
           {/*========== Card No 1============ */}
           <div className="rounded-lg shadow-md p-3 relative bg-white">
             <div className=" absolute left-0 top-[-28px] p-3 w-full">
