@@ -13,9 +13,11 @@ import { AiOutlineEye } from "react-icons/ai";
 
 const ForgetPassword = () => {
   const location = useLocation();
-  const [token, setToken] = useState(null);
-  const [forgotEmail, setForgotEmail] = useState(null);
-  const [acceptedMsg, setAcceptedMsg] = useState("");
+  // const [token, setToken] = useState(null);
+  // const [forgotEmail, setForgotEmail] = useState(null);
+  // const [acceptedMsg, setAcceptedMsg] = useState("");
+  const token = localStorage.getItem('token')
+  const email = localStorage.getItem('email')
 
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -35,8 +37,8 @@ const ForgetPassword = () => {
     const searchParams = new URLSearchParams(location.search);
     const token = searchParams.get("token");
     const email = searchParams.get("email");
-    setToken(token);
-    setForgotEmail(email);
+    // setToken(token);
+    // setForgotEmail(email);
   }, [location.search]);
   // console.log(forgotEmail);
 
@@ -46,10 +48,11 @@ const ForgetPassword = () => {
     const adminData = {
       email: data.email,
     };
+    localStorage.setItem('email', data.email)
     console.log(adminData);
     try {
       const response = await axios.post(
-        `${BASEURL}/auth/forgot-password`,
+        `${BASEURL}/auth/forget-password/send-otp`,
         adminData
       );
       toast.success(`${response.data.message}`, {
@@ -62,14 +65,14 @@ const ForgetPassword = () => {
         progress: undefined,
         theme: "light",
       });
-      if(response.data.success == true){
-          navigate("/")
+      if(response.data.status === 'success'){
+          navigate("/email-verify")
       }
       console.log(response.data);
       setLoginLoading(false);
       return response.data;
     } catch (error) {
-      toast.error(`${error.response.data.message}`, {
+      toast.error(`${error.response.data.error}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -82,14 +85,15 @@ const ForgetPassword = () => {
 
       console.log(error.response.data);
       setLoginLoading(false);
-      throw new Error(error.response.data.message);
+      throw new Error(error.response.data.error);
     }
   };
+
   const handleSetNewPassword = async (data) => {
     setLoginLoading(true);
     setLoading(false);
     const userData = {
-      email: forgotEmail,
+      email: email,
       newPassword: data.password,
     };
     // navigate("/email-verify");
@@ -117,13 +121,13 @@ const ForgetPassword = () => {
         progress: undefined,
         theme: "light",
       });
-      if (response.data.success == true) {
+      if (response.data.status === "success") {
         navigate("/");
       }
       setLoginLoading(false);
       return response.data;
     } catch (error) {
-      toast.error(`${error.response.data.message}`, {
+      toast.error(`${error.response.data.error}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -136,7 +140,7 @@ const ForgetPassword = () => {
 
       console.log(error.response.data);
       setLoginLoading(false);
-      throw new Error(error.response.data.message);
+      throw new Error(error.response.data.error);
     }
   };
   // useEffect(() => {

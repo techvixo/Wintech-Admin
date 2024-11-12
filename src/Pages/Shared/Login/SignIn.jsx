@@ -34,52 +34,54 @@ const SignIn = () => {
       email: data.email,
       password: data.password,
     };
-    console.log(adminData);
-    localStorage.setItem("token", "token");
-    localStorage.setItem("userId", 1);
-    localStorage.setItem("isVerified", true);
-    navigate("/");
-    // try {
-    //   const response = await axios.post(`${BASEURL}/auth/login`, adminData);
-    //   toast.success(`${response.data.message}`, {
-    //     position: "top-center",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
-    //   console.log(response.data);
-    //   const token = response?.data?.data?.accessToken;
-    //   const userId = response?.data?.data?.userData?._id;
-    //   const isVerified = response?.data?.data?.userData?.isVerified;
+    // console.log(adminData);
+    // localStorage.setItem("token", "token");
+    // localStorage.setItem("userId", 1);
+    // localStorage.setItem("isVerified", true);
+    // navigate("/");
+    try {
+      const response = await axios.post(`${BASEURL}/auth/login`, adminData);
+      toast.success(`${response.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.log(response.data);
+      const token = response?.data?.data?.accessToken;
+      const userId = response?.data?.data?._id;
+      const isVerified = response?.data?.data?.isVerified;
+      const email = response?.data?.data?.email;
 
-    //   if (response?.data?.success == true) {
-    //     localStorage.setItem("token", token);
-    //     localStorage.setItem("user_id", userId);
-    //     localStorage.setItem("isVerified", isVerified);
-    //     navigate("/");
-    //   }
-    //   setLoginLoading(false);
-    //   return response.data;
-    // } catch (error) {
-    //   toast.error(`${error.response.data.message}`, {
-    //     position: "top-center",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
+      if (response?.data?.status === 'success') {
+        localStorage.setItem("token", token);
+        localStorage.setItem("user_id", userId);
+        localStorage.setItem("isVerified", isVerified);
+        localStorage.setItem("email", email);
+        navigate("/");
+      }
+      setLoginLoading(false);
+      return response.data;
+    } catch (error) {
+      toast.error(`${error.response.data.error}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
 
-    //   console.log(error.response.data);
-    //   setLoginLoading(false);
-    //   throw new Error(error.response.data.message);
-    // }
+      console.log(error.response.data);
+      setLoginLoading(false);
+      throw new Error(error.response.data.error);
+    }
   };
   // useEffect(() => {
   //     handleSignIn()

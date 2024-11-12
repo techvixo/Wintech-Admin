@@ -54,9 +54,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: (
-          <VarificationRoute>
+          // <VarificationRoute>
+          //   <DashBoard></DashBoard>
+          // </VarificationRoute>
+          <PrivateRoute>
             <DashBoard></DashBoard>
-          </VarificationRoute>
+          </PrivateRoute>
         ),
       },
       {

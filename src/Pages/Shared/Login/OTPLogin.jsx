@@ -9,10 +9,10 @@ const EmailVarify = () => {
   const navigate = useNavigate();
   const email = localStorage.getItem("email");
   const token = localStorage.getItem("token");
-  const [verificationCode, setVerificationCode] = useState('');
+  const [verificationCode, setVerificationCode] = useState("");
   const [timer, setTimer] = useState(20); // Initial countdown timer value
   const [resendDisabled, setResendDisabled] = useState(true);
-  const [inputValues, setInputValues] = useState(['', '', '', '']);
+  const [inputValues, setInputValues] = useState(["", "", "", ""]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,18 +30,19 @@ const EmailVarify = () => {
     const newInputValues = [...inputValues];
     newInputValues[index] = value;
     setInputValues(newInputValues);
-    const code = newInputValues.join('');
+    const code = newInputValues.join("");
     setVerificationCode(code);
   };
 
   const LoginWithOtp = async (event) => {
     event.preventDefault();
-    const data ={
-      activation_code: verificationCode,
-      activation_token: token
-    }
+    console.log(event);
+    const data = {
+      otp: verificationCode,
+      email,
+    };
     try {
-      const response = await axios.post(`${BASEURL}/user/activate-user`, data);
+      const response = await axios.post(`${BASEURL}/auth/verify-otp`, data);
       toast.success(`${response.data.message}`, {
         position: "top-center",
         autoClose: 5000,
@@ -52,21 +53,21 @@ const EmailVarify = () => {
         progress: undefined,
         theme: "light",
       });
-      console.log(response.data)
+      console.log(response.data);
       const token = response?.data?.data?.accessToken;
-      const userId = response?.data?.data?.user?._id;
-      const isVerified = response?.data?.data?.user?.isVerified;
+      const userId = response?.data?.data?._id;
+      const isVerified = response?.data?.data?.isEmailVerified;
 
-      if (response.data.success == true) {
+      if (response.data.status === "success") {
         localStorage.setItem("token", token);
         localStorage.setItem("user_id", userId);
         localStorage.setItem("isVerified", isVerified);
         // localStorage.removeItem("email");
-        navigate("/");
+        navigate("/forgot-password");
       }
       return response.data;
     } catch (error) {
-      toast.error(`${error.response.data.message}`, {
+      toast.error(`${error.response.data.error}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -78,7 +79,7 @@ const EmailVarify = () => {
       });
 
       console.log(error.response.data);
-      throw new Error(error.response.data.message);
+      throw new Error(error.response.data.error);
     }
   };
 
@@ -89,7 +90,7 @@ const EmailVarify = () => {
     // Send verification code again
     console.log("Resending verification code...");
   };
-console.log(verificationCode);
+  console.log(verificationCode);
   return (
     <div className="md:h-screen flex justify-center items-center">
       <div className="w-5/6 mx-auto">
@@ -130,9 +131,7 @@ console.log(verificationCode);
               <span id="time_count" className="text-[#64748B] text-sm pt-4">
                 {timer > 0 ? `Send again in ${timer} seconds` : null}
               </span>
-              {
-              resendDisabled &&
-               timer === 0 && (
+              {resendDisabled && timer === 0 && (
                 <span
                   onClick={handleResend}
                   className="text-green-600 font-semibold my-2 text-sm"
@@ -151,10 +150,10 @@ console.log(verificationCode);
             </form>
             <div>
               <div className="text-center p-1 mt-4 text-sm">
-                <span>Back to  </span>{" "}
+                <span>Back to </span>{" "}
                 <span>
                   <Link to="/login" className="text-[#1A73E7] font-semibold">
-                   Login
+                    Login
                   </Link>
                 </span>
               </div>

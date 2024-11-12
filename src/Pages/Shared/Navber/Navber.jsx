@@ -52,6 +52,7 @@ const Navber = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user_id");
     localStorage.removeItem("verified");
+    localStorage.removeItem("email");
     navigate("/");
   };
   //   Check Authentication

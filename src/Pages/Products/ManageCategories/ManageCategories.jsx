@@ -1,47 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchAndFilter from "../SearchAndFilter/SearchAndFilter";
 import CategoryCard from "./CategoryCard";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import BASEURL from "../../../../Constants";
 
 const ManageCategories = () => {
-  // Sample data for categories
-  const [categories, setCategories] = useState([
-    {
-      id: 1,
-      title: "Product #1",
-      subtitle: "Subtitle",
-      category: "Category A",
-      status: "Active",
-    },
-    {
-      id: 2,
-      title: "Product #2",
-      subtitle: "Subtitle",
-      category: "Category B",
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      title: "Product #3",
-      subtitle: "Subtitle",
-      category: "Category C",
-      status: "Active",
-    },
-    // More categories can be added here
-  ]);
+  const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
 
- 
+  // Fetch categories from API
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${BASEURL}/category/all`);
+        console.log("API response:", response.data); 
+        setCategories(Array.isArray(response.data) ? response.data : response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  const displayedcategories = categories.slice(
+  const displayedCategories = categories.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const handleDelete = (id) => {
+    setCategories((prevCategories) => prevCategories.filter((cat) => cat._id !== id));
+  };
 
   return (
     <div className="bg-white rounded-md shadow-md p-5">
@@ -65,13 +60,11 @@ const ManageCategories = () => {
         </div>
       </div>
 
-      {/* Product Cards */}
+      {/* Category Cards */}
       <div className="grid grid-cols-3 gap-4 mb-6 my-5 py-5">
-        {displayedcategories.map((product, i) => {
-            return(
-              <CategoryCard key={i} product={product}></CategoryCard>
-             )
-        })}
+        {displayedCategories.map((category, i) => (
+          <CategoryCard key={i} product={category} onDelete={handleDelete} />
+        ))}
       </div>
 
       {/* Pagination */}
