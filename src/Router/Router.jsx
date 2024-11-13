@@ -40,6 +40,7 @@ import EditBlog from "../Pages/Blogs/EditBlog";
 import OurMachine from "../Pages/HomePage/Machines/OurMechine";
 import EditMachine from "../Pages/HomePage/Machines/EditMachine";
 import AddMachine from "../Pages/HomePage/Machines/AddMachine";
+import FeaturedVideo from "../Pages/HomePage/FeaturedVideo/FeaturedVideo";
 
 const router = createBrowserRouter([
   {
@@ -296,7 +297,7 @@ const router = createBrowserRouter([
         path: "/home/featured-video",
         element: (
           <PrivateRoute>
-            <HomePage></HomePage>
+            <FeaturedVideo></FeaturedVideo>
           </PrivateRoute>
         ),
       },
