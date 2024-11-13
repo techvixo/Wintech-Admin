@@ -18,9 +18,6 @@ import logo from "../../../assets/logo/logo.png";
 
 const SideNavBar = () => {
   const navigation = useNavigate();
-
-  const verifiedString = localStorage.getItem("isVerified");
-  const isVerified = JSON.parse(verifiedString);
   const dashboard = <RiDashboardFill />;
   const banner = <GiLoveSong />;
   const products = <FaUsers />;
@@ -75,14 +72,6 @@ const SideNavBar = () => {
       icon: message,
     },
   ]);
-  const [withoutVerifyMenus] = useState([
-    {
-      name: "onboarding",
-      path: "/profile-verification",
-      icon: onboarding,
-    },
-  ]);
-
   const handleLogOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user_id");

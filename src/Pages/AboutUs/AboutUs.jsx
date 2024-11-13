@@ -1,10 +1,17 @@
-import React from 'react'
-import OurTeams from './OurTeams/OurTeams'
+import React, { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const AboutUs = () => {
+const AboutUs = () => {  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/about") {
+      navigate("/about/teams"); 
+    }
+  }, [location, navigate]);
   return (
     <div className=''>
-      <OurTeams></OurTeams>
+     About Root Page
     </div>
   )
 }
