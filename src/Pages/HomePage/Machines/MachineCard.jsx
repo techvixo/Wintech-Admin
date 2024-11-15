@@ -5,7 +5,7 @@ import defaultImg from "../../../assets/default-img.png";
 import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
 
-const MachineCard = ({ machine, onEdit, onDelete }) => {
+const MachineCard = ({ machine, setIsDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedMachine, setEditedMachine] = useState({
     title_en: machine.title_en,
@@ -49,7 +49,6 @@ const MachineCard = ({ machine, onEdit, onDelete }) => {
       if (response.status === 200) {
         toast.success("Machine updated successfully");
         setIsEditing(false);
-        if (onEdit) onEdit(response.data);
       } else {
         toast.error("Failed to update machine.");
       }
@@ -64,7 +63,7 @@ const MachineCard = ({ machine, onEdit, onDelete }) => {
       const response = await axios.delete(`${BASEURL}/web-home/cnc-machine-part/delete/${id}`);
       if (response.status === 200) {
         toast.success("Machine deleted successfully");
-        if (onDelete) onDelete(id);
+        setIsDelete(true)
       } else {
         toast.error("Failed to delete machine.");
       }

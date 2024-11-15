@@ -6,7 +6,7 @@ import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, setIsDelete }) => {
   // console.log(product)
   const [isEditing, setIsEditing] = useState(false);
   const [editedProduct, setEditedProduct] = useState({
@@ -101,6 +101,7 @@ const ProductCard = ({ product }) => {
       const response = await axios.delete(`${BASEURL}/product/delete/${id}`);
       if (response.data.status === "success") {
         toast.success(response.data.message);
+        setIsDelete(true)
       } else {
         toast.error("Failed to delete product.");
       }

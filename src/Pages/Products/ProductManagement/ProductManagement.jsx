@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 const ProductManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDelete, setIsDelete] = useState(false);
   const [products, setProducts] = useState([]);
   const itemsPerPage = 3;
 // console.log(products)
@@ -23,7 +24,7 @@ const ProductManagement = () => {
       }
     };
     fetchProducts();
-  }, []); // Empty dependency array to run only once when the component mounts
+  }, [isDelete]); // Empty dependency array to run only once when the component mounts
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -70,7 +71,7 @@ const ProductManagement = () => {
       <div className="grid grid-cols-3 gap-4 mb-6 my-4">
         { 
           currentItems?.map((product, i) => (
-            <ProductCard key={i} product={product} />
+            <ProductCard key={i} product={product} setIsDelete={setIsDelete}/>
           ))
         }
       </div>

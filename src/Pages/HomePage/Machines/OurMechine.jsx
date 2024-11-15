@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 const OurMachine = () => {
   const [machines, setMachines] = useState([]);
+  const [isDelete, setIsDelete] = useState(false);
 
   useEffect(() => {
     const fetchMachines = async () => {
@@ -23,7 +24,7 @@ const OurMachine = () => {
     };
 
     fetchMachines();
-  }, []);
+  }, [isDelete]);
 
   return (
     <div className="p-5 bg-white rounded-md shadow-md">
@@ -49,7 +50,7 @@ const OurMachine = () => {
       {machines.length > 0 && 
         <div className="grid grid-cols-3 gap-4 mb-6 my-4">
           {machines.map((machine, i) => (
-            <MachineCard key={i} machine={machine}></MachineCard>
+            <MachineCard key={i} machine={machine} setIsDelete={setIsDelete}></MachineCard>
           ))}
         </div>
       }
