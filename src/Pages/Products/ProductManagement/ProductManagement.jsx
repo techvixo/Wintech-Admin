@@ -1,43 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import SearchAndFilter from "../SearchAndFilter/SearchAndFilter";
 import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
+import BASEURL from "../../../../Constants";
+import { toast } from "react-toastify";
 
 const ProductManagement = () => {
-  // Sample data for products
-  const products = [
-    {
-      id: 1,
-      title: "Product #1",
-      subtitle: "Subtitle",
-      category: "Category A",
-      status: "Active",
-    },
-    {
-      id: 2,
-      title: "Product #2",
-      subtitle: "Subtitle",
-      category: "Category B",
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      title: "Product #3",
-      subtitle: "Subtitle",
-      category: "Category C",
-      status: "Active",
-    },
-    // More products can be added here
-  ]
   const [currentPage, setCurrentPage] = useState(1);
+  const [products, setProducts] = useState([]);
   const itemsPerPage = 3;
-
+// console.log(products)
+  useEffect(() => {
+    // Fetch products from the API using Axios
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${BASEURL}/product/all`);
+        setProducts(response.data.data);
+        // toast.success(response.data.message);
+      } catch (error) {
+        toast.error(error.response.data.error);
+      }
+    };
+    fetchProducts();
+  }, []); // Empty dependency array to run only once when the component mounts
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-
+  // Handle paginated data
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div className="">
@@ -50,7 +45,8 @@ const ProductManagement = () => {
         {/* Search and Filter */}
         <SearchAndFilter></SearchAndFilter>
         <div className="w-1/3 flex flex-col gap-3 items-end justify-center">
-          <Link to={"/products/create"}
+          <Link
+            to={"/products/create"}
             className="text-sm text-white py-2 px-4 rounded"
             style={{
               background: "linear-gradient(to bottom, #3E3D45, #202020)",
@@ -58,7 +54,8 @@ const ProductManagement = () => {
           >
             + Add New Product
           </Link>
-          <Link to={"/products/category"}
+          <Link
+            to={"/products/category"}
             className="text-sm text-white py-2 px-4 rounded"
             style={{
               background: "linear-gradient(to bottom, #3E3D45, #202020)",
@@ -71,13 +68,31 @@ const ProductManagement = () => {
 
       {/* Product Cards */}
       <div className="grid grid-cols-3 gap-4 mb-6 my-4">
-        {products.map((product, i) => {
-            return(
-              <ProductCard key={i} product={product}></ProductCard>
-             )
-        })}
+        { 
+          currentItems?.map((product, i) => (
+            <ProductCard key={i} product={product} />
+          ))
+        }
       </div>
 
+      {/* Pagination controls */}
+      <div className="flex justify-center my-4">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-500 text-white rounded"
+        >
+          Previous
+        </button>
+        <span className="mx-4">{currentPage}</span>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={indexOfLastItem >= products.length}
+          className="px-4 py-2 bg-gray-500 text-white rounded"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

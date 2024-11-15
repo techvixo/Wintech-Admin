@@ -1,6 +1,94 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import BASEURL from "../../../../Constants";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const AddProduct = () => {
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState({});
+  const [images, setImages] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState([]);
+  const navigate = useNavigate();
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    setValue,
+  } = useForm();
+
+  useEffect(() => {
+    // Fetch categories from the API
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${BASEURL}/category/all`);
+        setCategories(response.data.data);
+      } catch (error) {
+        console.error(error.response);
+        console.error(error.response.data.error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const handleCategoryChange = (e) => {
+    const selectedId = e.target.value;
+    const category = categories.find((cat) => cat._id === selectedId);
+    setSelectedCategory(category || {});
+    setValue("category", category);
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImages(files);
+
+    // Create preview URLs
+    const urls = files.map((file) => URL.createObjectURL(file));
+    setPreviewUrls(urls);
+  };
+
+  const onSubmit = async (data) => {
+    // if (!selectedCategory._id) {
+    //   toast.error("Please select a category.");
+    //   return;
+    // }
+
+    const category = {
+      categoryId: selectedCategory._id,
+      title_en: selectedCategory.name_en,
+      title_cn: selectedCategory.name_cn,
+    };
+// console.log("selected category      ",selectedCategory)
+    const formData = new FormData();
+    formData.append("title_en", data.title_en);
+    formData.append("title_cn", data.title_cn);
+    formData.append("subTitle_en", data.subTitle_en);
+    formData.append("subTitle_cn", data.subTitle_cn);
+    formData.append("description_en", data.description_en);
+    formData.append("description_cn", data.description_cn);
+    formData.append("category", JSON.stringify(category));
+
+    images.forEach((image) => {
+      formData.append("images", image);
+    });
+
+    try {
+      const response = await axios.post(`${BASEURL}/product/create`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      toast.success(response.data.message);
+      navigate("/products");
+    } catch (error) {
+      console.error("Error creating product:", error);
+      toast.error(error.response.data.error);
+    }
+  };
+
   return (
     <div className="p-5 rounded-md shadow-md bg-white">
       <h1 className="my-2 font-semibold text-[#344767]">
@@ -9,83 +97,130 @@ const AddProduct = () => {
       </h1>
       <div className="w-1/3">
         <div className="flex flex-col gap-5 py-5">
-        {/*========== Product Basic=========== */}
+          {/* Product Basic */}
           <div className="flex flex-col gap-2">
             <p className="font-semibold text-[#344767] text-sm">
               Product Basic
             </p>
             <input
+              {...register("title_en", {
+                required: "Product name in English is required",
+              })}
               type="text"
-              name=""
-              placeholder="Product Name"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
+              placeholder="Product Name in English"
+              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm"
             />
+            {errors.title_en && (
+              <span className="text-red-500">{errors.title_en.message}</span>
+            )}
             <input
+              {...register("title_cn", {
+                required: "Product name in Chinese is required",
+              })}
               type="text"
-              name=""
-              placeholder="SKU (Stock Keeping Unit)                                 Optional"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
+              placeholder="Product Name in Chinese"
+              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm"
             />
-            <input
-              type="text"
-              name=""
-              placeholder="Product’s Category"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            />
+            {errors.title_cn && (
+              <span className="text-red-500">{errors.title_cn.message}</span>
+            )}
+
+            {/* Category Dropdown */}
+            <select
+              {...register("category", {
+                required: "Please select a category",
+              })}
+              value={selectedCategory._id || ""}
+              onChange={handleCategoryChange}
+              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm"
+            >
+              <option value="">Select Category</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name_en}
+                </option>
+              ))}
+            </select>
+            {errors.category && (
+              <span className="text-red-500">{errors.category.message}</span>
+            )}
           </div>
-        {/*========== Product Description =========== */}
+
+          {/* Product Description */}
           <div className="flex flex-col gap-2">
             <p className="font-semibold text-[#344767] text-sm">
-              Product Description 
+              Product Description
             </p>
             <input
+              {...register("subTitle_en", {
+                required: "Short description in English is required",
+              })}
               type="text"
-              name=""
-              placeholder="Short Description"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
+              placeholder="Short Description in English"
+              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm"
+            />
+            {errors.subTitle_en && (
+              <span className="text-red-500">{errors.subTitle_en.message}</span>
+            )}
+            <input
+              {...register("subTitle_cn", {
+                required: "Short description in Chinese is required",
+              })}
+              type="text"
+              placeholder="Short Description in Chinese"
+              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm"
+            />
+            {errors.subTitle_cn && (
+              <span className="text-red-500">{errors.subTitle_cn.message}</span>
+            )}
+            <input
+              {...register("description_en")}
+              type="text"
+              placeholder="Long Description in English"
+              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm"
             />
             <input
+              {...register("description_cn")}
               type="text"
-              name=""
-              placeholder="Long Description"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            />
-          </div>
-        {/*========== Pricing & Inventory =========== */}
-          <div className="flex flex-col gap-2">
-            <p className="font-semibold text-[#344767] text-sm">
-            Pricing & Inventory
-            </p>
-            <input
-              type="text"
-              name=""
-              placeholder="Price"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            />
-            <input
-              type="text"
-              name=""
-              placeholder="Discounted Price                                                 Optional"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            />
-            <input
-              type="text"
-              name=""
-              placeholder="Stock Status"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
+              placeholder="Long Description in Chinese"
+              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm"
             />
           </div>
 
+          {/* Image Upload */}
+          <div className="flex flex-col gap-2">
+            <p className="font-semibold text-[#344767] text-sm">
+              Upload Images
+            </p>
+            <input
+              type="file"
+              multiple
+              onChange={handleImageChange}
+              className="text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm"
+            />
+            <div className="flex flex-wrap gap-2 mt-2">
+              {previewUrls.map((url, index) => (
+                <img
+                  key={index}
+                  src={url}
+                  alt={`Preview ${index}`}
+                  className="w-24 h-24 object-cover rounded-md"
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Buttons */}
           <div className="flex items-center gap-3 py-5">
             <button
-              // onClick={() => handleEdit(product.id)}
+              onClick={handleSubmit(onSubmit)}
               className="btn btn-outline btn-info btn-sm px-4"
             >
               Save Drafts
             </button>
             <button
-              // onClick={() => handleEdit(product.id)}
-              className="btn  btn-info btn-sm px-4"
+              onClick={handleSubmit(onSubmit)}
+              className="btn btn-info btn-sm px-4"
             >
               Publish Now
             </button>
