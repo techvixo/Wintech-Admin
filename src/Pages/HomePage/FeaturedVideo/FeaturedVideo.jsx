@@ -6,31 +6,34 @@ import { toast } from "react-toastify";
 import axios from "axios";
 const FeaturedVideo = () => {
   const navigate = useNavigate();
-  const [imagePreview, setImagePreview] = useState(null); // Replace with your default image URL
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [imagePreview, setImagePreview] = useState(null); // Replace with your default image URL
+  // const [selectedFile, setSelectedFile] = useState(null);
   const token = localStorage.getItem("token");
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      setImagePreview(URL.createObjectURL(file)); // Create a preview URL for the uploaded image
-    }
-  };
+  // const handleImageUpload = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     setSelectedFile(file);
+  //     setImagePreview(URL.createObjectURL(file)); // Create a preview URL for the uploaded image
+  //   }
+  // };
   const createMachine = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const title_en = form.title_en.value;
-    const title_cn = form.title_cn.value;
-    const formData = new FormData();
-    formData.append("title_en", title_en);
-    formData.append("title_cn", title_cn);
-    if (selectedFile) {
-      formData.append("image", selectedFile);
+    const payload = {
+      left_side_video_url: form.url.value || null,
+      right_side_video_url: form.url.value || null
     }
+    // const title_cn = form.title_cn.value;
+    // const formData = new FormData();
+    // formData.append("title_en", title_en);
+    // formData.append("title_cn", title_cn);
+    // if (selectedFile) {
+    //   formData.append("image", selectedFile);
+    // }
     try {
       const response = await axios.post(
-        `${BASEURL}/web-home/cnc-machine-part/create`,
-        formData,
+        `${BASEURL}/web-home/featured-video/add`,
+        payload,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -39,7 +42,7 @@ const FeaturedVideo = () => {
         }
       );
       console.log(response);
-      toast.success(`About banner created successful`);
+      toast.success(`Featured video added!`);
     } catch (error) {
       console.log(error);
       toast.error(`${error.response.data.error}`);
@@ -55,7 +58,7 @@ const FeaturedVideo = () => {
             Featured Video 1
           </h1>
           <div className="flex flex-col gap-2">
-            <p className="font-semibold text-[#344767] text-sm">Image Upload</p>
+            {/* <p className="font-semibold text-[#344767] text-sm">Image Upload</p>
             <div className="flex items-center justify-between">
               <input
                 type="file"
@@ -70,8 +73,8 @@ const FeaturedVideo = () => {
               >
                 <span className="text-xl mr-1">+</span> Upload New Image
               </label>
-            </div>
-            <input
+            </div> */}
+            {/* <input
               type="text"
               required
               name="title_en"
@@ -84,7 +87,7 @@ const FeaturedVideo = () => {
               required
               placeholder="write title in chinese"
               className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            />
+            /> */}
             <input
               type="url"
               required
@@ -113,7 +116,7 @@ const FeaturedVideo = () => {
             Featured Video 2
           </h1>
           <div className="flex flex-col gap-2">
-            <p className="font-semibold text-[#344767] text-sm">Image Upload</p>
+            {/* <p className="font-semibold text-[#344767] text-sm">Image Upload</p>
             <div className="flex items-center justify-between">
               <input
                 type="file"
@@ -142,7 +145,7 @@ const FeaturedVideo = () => {
               name="title_cn"
               placeholder="write title in chinese"
               className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            />
+            /> */}
             <input
               type="url"
               required
