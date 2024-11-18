@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import AboutMenu from "../AboutMenu";
 import defaultImg from "../../../assets/default-img.png"
+import Loader from "../../Shared/Loader/Loader";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import BASEURL from "../../../../Constants";
+import axios from "axios";
+
+
 const EditCertificate = () => {
+  const {id} = useParams();
   const [imagePreview, setImagePreview] = useState(defaultImg); // Replace with your default image URL
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -12,11 +20,27 @@ const EditCertificate = () => {
       setImagePreview(URL.createObjectURL(file)); // Create a preview URL for the uploaded image
     }
   };
-  const data={
-    id: 1,
-    name: "Certificate Name",
-   }
+
+    // <<<<<<<<< Certificate Data Recived Here.. >>>>>>>>>>
+    const { data: certificateData = [], isLoading, refetch } = useQuery({
+      queryKey: ["certificate-data"],
+      queryFn: async () => {
+        const response = await axios.get(`${BASEURL}/certificate/${id}`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        });
+        return response.data;
+      },
+    });
   
+    if (isLoading) {
+      return <Loader></Loader>;
+    }
+    // console.log(id);
+    console.log(certificateData?.data);
   return (
     <div className="p-5 rounded-md shadow-md bg-white">
       <AboutMenu></AboutMenu>
@@ -47,9 +71,16 @@ const EditCertificate = () => {
             </div>
             <input
               type="text"
-              name="Certificate Name"
-              placeholder="Certificate Name"
-              defaultValue={data?.name}
+              name="name_en"
+              placeholder="Certificate Name in English"
+              defaultValue={certificateData?.data?.name_en}
+              className="font-semibold text-black text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
+            />
+            <input
+              type="text"
+              name="name_cn"
+              placeholder="Certificate Name in Chines"
+              defaultValue={certificateData?.data?.name_cn}
               className="font-semibold text-black text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
             />
           </div>
@@ -79,6 +110,18 @@ const EditCertificate = () => {
                 />
                 <div className="absolute top-3 left-7 bg-red-500 text-white text-xs py-1 px-2 rounded">
                   CURRENT IMAGE PREVIEW
+                </div>
+              </div>
+            )}
+      {certificateData?.data?.image && (
+              <div className="image-preview relative  w-52 h-52 overflow-hidden rounded-lg mr-4">
+                <img
+                  src={`${BASEURL}/${certificateData?.data?.image}`}
+                  alt="Current Preview"
+                  className="w-full h-full shadow-md rounded-full object-cover"
+                />
+                <div className="absolute top-3 left-7 bg-green-500 text-white text-xs py-1 px-2 rounded">
+                  Previous IMAGE PREVIEW
                 </div>
               </div>
             )}

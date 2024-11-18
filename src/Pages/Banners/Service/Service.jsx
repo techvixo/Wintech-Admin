@@ -3,6 +3,8 @@ import BannerEditor from "../BannerEditor";
 import axios from "axios";
 import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../../Shared/Loader/Loader";
 
 const Service = () => {
   const [titleEn, setTitleEn] = useState("");
@@ -10,8 +12,28 @@ const Service = () => {
   const [titleCn, setTitleCn] = useState("");
   const [subtitleCn, setSubtitleCn] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-
   const token = localStorage.getItem("token");
+
+  // <<<<<<<<< Banner Data Recived Here.. >>>>>>>>>>
+  const {
+    data: bannerData = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["banner-data"],
+    queryFn: async () => {
+      const response = await axios.get(`${BASEURL}/web-banner/services`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      return response.data;
+    },
+  });
+
+  console.log(bannerData.data);
 
   const bannerServiceHandler = async () => {
     const formData = new FormData();
@@ -19,7 +41,7 @@ const Service = () => {
     formData.append("description_en", subtitleEn);
     formData.append("title_cn", titleCn);
     formData.append("description_cn", subtitleCn);
-    formData.append("purpose", 'services');
+    formData.append("purpose", "services");
     if (selectedFile) {
       formData.append("banner_image", selectedFile);
     }
@@ -47,7 +69,7 @@ const Service = () => {
         progress: undefined,
         theme: "light",
       });
-
+      refetch();
       // Reset the form or handle success response
     } catch (error) {
       toast.error(`${error.response.data.error}`, {
@@ -65,14 +87,19 @@ const Service = () => {
 
   return (
     <div>
-      <BannerEditor
-        setTitleEn={setTitleEn}
-        setSubtitleEn={setSubtitleEn}
-        setTitleCn={setTitleCn}
-        setSubtitleCn={setSubtitleCn}
-        setSelectedFile={setSelectedFile}
-        handler={bannerServiceHandler}
-      ></BannerEditor>
+      {isLoading ? (
+        <Loader></Loader>
+      ) : (
+        <BannerEditor
+          data={bannerData?.data}
+          setTitleEn={setTitleEn}
+          setSubtitleEn={setSubtitleEn}
+          setTitleCn={setTitleCn}
+          setSubtitleCn={setSubtitleCn}
+          setSelectedFile={setSelectedFile}
+          handler={bannerServiceHandler}
+        ></BannerEditor>
+      )}
     </div>
   );
 };

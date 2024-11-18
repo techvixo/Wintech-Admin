@@ -41,6 +41,7 @@ import OurMachine from "../Pages/HomePage/Machines/OurMechine";
 import EditMachine from "../Pages/HomePage/Machines/EditMachine";
 import AddMachine from "../Pages/HomePage/Machines/AddMachine";
 import FeaturedVideo from "../Pages/HomePage/FeaturedVideo/FeaturedVideo";
+import HeroBanner from "../Pages/Banners/HeroBanner/HeroBanner";
 
 const router = createBrowserRouter([
   {
@@ -77,7 +78,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/banner/home",
-            element: <Home></Home>
+            element: <HeroBanner></HeroBanner>
           },
           {
             path: "/banner/service",
@@ -182,7 +183,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/about/certificates/edit",
+        path: "/about/certificates/edit/:id",
         element: (
           <PrivateRoute>
            <EditCertificate></EditCertificate>

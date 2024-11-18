@@ -58,37 +58,7 @@ const FeaturedVideo = () => {
             Featured Video 1
           </h1>
           <div className="flex flex-col gap-2">
-            {/* <p className="font-semibold text-[#344767] text-sm">Image Upload</p>
-            <div className="flex items-center justify-between">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-                id="imageUpload"
-              />
-              <label
-                htmlFor="imageUpload"
-                className="flex items-center justify-center gap-3 my-0 font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-md w-full h-32 cursor-pointer"
-              >
-                <span className="text-xl mr-1">+</span> Upload New Image
-              </label>
-            </div> */}
-            {/* <input
-              type="text"
-              required
-              name="title_en"
-              placeholder="write title in english"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            />
-            <input
-              type="text"
-              name="title_cn"
-              required
-              placeholder="write title in chinese"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            /> */}
-            <input
+           <input
               type="url"
               required
               name="url"
@@ -116,36 +86,6 @@ const FeaturedVideo = () => {
             Featured Video 2
           </h1>
           <div className="flex flex-col gap-2">
-            {/* <p className="font-semibold text-[#344767] text-sm">Image Upload</p>
-            <div className="flex items-center justify-between">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-                id="imageUpload"
-              />
-              <label
-                htmlFor="imageUpload"
-                className="flex items-center justify-center gap-3 my-0 font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-md w-full h-32 cursor-pointer"
-              >
-                <span className="text-xl mr-1">+</span> Upload New Image
-              </label>
-            </div>
-            <input
-              type="text"
-              required
-              name="title_en"
-              placeholder="write title in english"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            />
-            <input
-              type="text"
-              required
-              name="title_cn"
-              placeholder="write title in chinese"
-              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
-            /> */}
             <input
               type="url"
               required
@@ -168,20 +108,6 @@ const FeaturedVideo = () => {
             />
           </div>
         </form>
-        {/* <div className="flex justify-center pt-14 w-1/2">
-          {imagePreview && (
-            <div className="image-preview relative  w-52 h-52 overflow-hidden rounded-lg mr-4">
-              <img
-                src={imagePreview}
-                alt="Current Preview"
-                className="w-full h-full shadow-md rounded-full object-cover"
-              />
-              <div className="absolute top-3 left-7 bg-red-500 text-white text-xs py-1 px-2 rounded">
-                CURRENT IMAGE PREVIEW
-              </div>
-            </div>
-          )}
-        </div> */}
       </div>
     </div>
   );

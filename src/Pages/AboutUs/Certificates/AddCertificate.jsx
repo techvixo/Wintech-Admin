@@ -1,15 +1,56 @@
 import React, { useState } from "react";
 import AboutMenu from "../AboutMenu";
+import BASEURL from "../../../../Constants";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+// import toast from "react-hot-toast";
 
 const AddCertificate = () => {
   const [imagePreview, setImagePreview] = useState(null); // Replace with your default image URL
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
       setImagePreview(URL.createObjectURL(file)); // Create a preview URL for the uploaded image
+    }
+  };
+
+  const handleAddCertificate = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData();
+
+    const name_en = form.name_en.value;
+    const name_cn = form.name_cn.value;
+    formData.append("name_en", name_en);
+    formData.append("name_cn", name_cn);
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
+    try {
+      const response = await axios.post(
+        `${BASEURL}/certificate/create`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      toast.success(`Certificate added!`);
+      form.reset();
+      setSelectedFile(null)
+      setImagePreview(null)
+      navigate("/about/certificates")
+    } catch (error) {
+      console.log(error);
+      toast.error(`${error.response?.data?.error}`);
     }
   };
   return (
@@ -21,7 +62,7 @@ const AddCertificate = () => {
       </h1>
      <div className="flex">
      <div className="w-1/3">
-        <div className="flex flex-col gap-5 py-3">
+        <form onSubmit={handleAddCertificate} className="flex flex-col gap-5 py-3">
           {/*========== Product Basic=========== */}
           <div className="flex flex-col gap-2">
             <p className="font-semibold text-[#344767] text-sm">Image Upload</p>
@@ -42,8 +83,16 @@ const AddCertificate = () => {
             </div>
             <input
               type="text"
-              name="Certificate Name"
-              placeholder="Certificate Name"
+              name="name_en"
+              required
+              placeholder="Certificate Name in English"
+              className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
+            />
+            <input
+              type="text"
+              name="name_cn"
+              required
+              placeholder="Certificate Name in Chines"
               className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
             />
            </div>
@@ -54,14 +103,9 @@ const AddCertificate = () => {
             >
               Cancel
             </button>
-            <button
-              // onClick={() => handleEdit(product.id)}
-              className="btn  btn-info btn-sm px-4"
-            >
-              Save
-            </button>
+            <input type="submit" value="Save" className="btn  btn-info btn-sm px-4" />
           </div>
-        </div>
+        </form>
       </div>
       <div className="flex justify-center pt-14 w-2/3">
       {imagePreview && (

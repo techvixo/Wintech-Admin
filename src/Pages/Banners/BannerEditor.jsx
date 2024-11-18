@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import defaultImg from "../../assets/default-img.png"
+import BASEURL from "../../../Constants";
 
-const BannerEditor = ({setTitleEn, setSubtitleEn, setTitleCn, setSubtitleCn, setSelectedFile, handler}) => {
-  const [imagePreview, setImagePreview] = useState(defaultImg); // Replace with your default image URL
+const BannerEditor = ({data, setTitleEn, setSubtitleEn, setTitleCn, setSubtitleCn, setSelectedFile, handler}) => {
+  const [imagePreview, setImagePreview] = useState(data?.banner_image ? `${BASEURL}/${data?.banner_image}`: defaultImg); // Replace with your default image URL
   
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -11,11 +12,18 @@ const BannerEditor = ({setTitleEn, setSubtitleEn, setTitleCn, setSubtitleCn, set
       setImagePreview(URL.createObjectURL(file)); // Create a preview URL for the uploaded image
     }
   };
-
+useEffect(() => {
+  setTitleEn(data?.title_en)
+  setTitleCn(data?.title_cn)
+  setSubtitleEn(data?.title_en)
+  setSubtitleCn(data?.title_en)
+},[data])
+console.log(imagePreview);
   return (
     <div className="banner-editor flex p-4 rounded-lg shadow-lg bg-white">
       {/* Left side image preview */}
       <div className="image-preview relative w-2/3 overflow-hidden rounded-lg mr-4">
+      
         <img
           src={imagePreview}
           alt="Current Preview"
@@ -29,17 +37,17 @@ const BannerEditor = ({setTitleEn, setSubtitleEn, setTitleCn, setSubtitleCn, set
       {/* Right side content */}
       <div className="content w-1/3">
         {/* Input Fields */}
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between ">
           <input
             type="text"
-            // value={title}
+            defaultValue={data?.title_en}
             onChange={(e) => setTitleEn(e.target.value)}
             placeholder="Title in English"
             className="w-full p-2 mb-2 border border-gray-300 rounded"
           />
         </div>
         <textarea
-          // value={subtitle}
+            defaultValue={data?.description_en}
           onChange={(e) => setSubtitleEn(e.target.value)}
           placeholder="Subtitle in English"
           className="w-full p-2 mb-4 border border-gray-300 rounded"
@@ -47,17 +55,17 @@ const BannerEditor = ({setTitleEn, setSubtitleEn, setTitleCn, setSubtitleCn, set
         />
 
         {/* Input Fields */}
-        <div className="flex items-center justify-between mb-2 mt-8">
+        <div className="flex items-center justify-between mb-2 ">
           <input
             type="text"
-            // value={title}
+            defaultValue={data?.title_cn}
             onChange={(e) => setTitleCn(e.target.value)}
             placeholder="Title in Chinese"
             className="w-full p-2 mb-2 border border-gray-300 rounded"
           />
         </div>
         <textarea
-          // value={subtitle}
+            defaultValue={data?.description_cn}
           onChange={(e) => setSubtitleCn(e.target.value)}
           placeholder="Subtitle in Chinese"
           className="w-full p-2 mb-4 border border-gray-300 rounded"
