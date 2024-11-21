@@ -1,28 +1,36 @@
 import React from "react";
 import defaultImg from "../../assets/default-img.png"
 import { Link } from "react-router-dom";
-const PortfolioCard = ({team}) => {
+import BASEURL from "../../../Constants";
+const PortfolioCard = ({portfolio}) => {
+  const {_id, name_en, name_cn, description_en, description_cn, image, url, createdAt} = portfolio
   return (
     <div  className="flex flex-col gap-2 rounded-lg shadow p-4">
       <img
-        src={defaultImg}
+        src={image ? `${BASEURL}/${image}` : defaultImg}
         alt="team"
         className="w-full h-32 object-cover rounded"
       />
        <p className="font-semibold text-[#7B809A] text-sm">
-        Product: #{team.id}
+        Product: #{_id}
       </p>
       <p className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm ">
-      Project Name
+     {name_en}
       </p>
       <p className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm ">
-      Description
+     {name_cn}
       </p>
       <p className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm ">
-      Link to Project
+      {description_en}
       </p>
       <p className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm ">
-      Project Status
+      {description_cn}
+      </p>
+      <p className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm ">
+      {url}
+      </p>
+      <p className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm ">
+      Data: {createdAt}
       </p>
       <div className="flex items-center gap-3">
         <Link to={"/portfolio/edit"}

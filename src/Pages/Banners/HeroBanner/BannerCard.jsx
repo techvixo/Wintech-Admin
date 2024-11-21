@@ -101,7 +101,7 @@ const BannerCard = ({ refetch, sliderInfo }) => {
   const handleDeleteSlider = async (sliderInfo) => {
     try {
       const response = await axios.delete(
-        `${BASEURL}/admin/promotion/${sliderInfo?._id}`,
+        `${BASEURL}/hero/delete/${sliderInfo?._id}`,
         {
           headers: {
             Authorization: localStorage.getItem("token"),
@@ -210,7 +210,7 @@ const BannerCard = ({ refetch, sliderInfo }) => {
             <div className="grid grid-cols-2 gap-2 w-full">
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text">Title</span>
+                  <span className="label-text">Title in English</span>
                 </label>
                 <input
                   name="title"
@@ -223,13 +223,13 @@ const BannerCard = ({ refetch, sliderInfo }) => {
               </div>
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text">Title</span>
+                  <span className="label-text">Title in Chines</span>
                 </label>
                 <input
                   name="title"
                   type="text"
-                  value={titleEn}
-                  onChange={(e) => setTitleEn(e.target.value)}
+                  value={titleCn}
+                  onChange={(e) => setTitleCn(e.target.value)}
                   placeholder="Enter your slider title"
                   className="input input-sm   input-bordered w-full"
                 />
@@ -238,7 +238,7 @@ const BannerCard = ({ refetch, sliderInfo }) => {
             <div className="grid grid-cols-2 gap-2 w-full">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">discripttion</span>
+                  <span className="label-text">description in English</span>
                 </label>
                 <textarea
                   name="disc"
@@ -250,12 +250,12 @@ const BannerCard = ({ refetch, sliderInfo }) => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">discripttion</span>
+                  <span className="label-text">description in Chines</span>
                 </label>
                 <textarea
                   name="disc"
-                  value={desEn}
-                  onChange={(e) => setDesEn(e.target.value)}
+                  value={desCn}
+                  onChange={(e) => setDesCn(e.target.value)}
                   className="textarea textarea-bordered w-full textarea-xs"
                   placeholder="Description"
                 ></textarea>
@@ -313,7 +313,7 @@ const BannerCard = ({ refetch, sliderInfo }) => {
       {deleteingSlider && (
         <ConfirmationModal
           title={`Are you sure you want to delete?`}
-          message={`If you delete ${deleteingSlider?.title}. It cannot be undon`}
+          message={`If you delete ${deleteingSlider?.title_en}. It cannot be undon`}
           closeModal={cencelModal}
           successAction={handleDeleteSlider}
           successButton={`Delete`}

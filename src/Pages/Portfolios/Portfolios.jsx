@@ -2,37 +2,37 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SearchAndFilter from "../Products/SearchAndFilter/SearchAndFilter";
 import PortfolioCard from "./PortfolioCard";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import BASEURL from "../../../Constants";
+import Loader from "../Shared/Loader/Loader";
 
 const Portfolios = () => {
-  const ourTeams = [
-    {
-      id: 1,
-      name: "Name",
-      role: "Role",
-      Experience: "Experience",
-      Language: "Language",
-      Address: "Address",
-      University: "University",
+  
+  // <<<<<<<<< Portfolio Data Recived >>>>>>>>>>
+  const {
+    data: portfolioData = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["get-portfolio"],
+    queryFn: async () => {
+      const response = await axios.get(`${BASEURL}/portfolio/all`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      return response.data;
     },
-    {
-      id: 1,
-      name: "Name",
-      role: "Role",
-      Experience: "Experience",
-      Language: "Language",
-      Address: "Address",
-      University: "University",
-    },
-    {
-      id: 1,
-      name: "Name",
-      role: "Role",
-      Experience: "Experience",
-      Language: "Language",
-      Address: "Address",
-      University: "University",
-    },
-  ];
+  });
+
+  if (isLoading) {
+      return <Loader></Loader>
+  }
+  console.log(portfolioData.data);
+
 
   return (
     <div className="p-5 bg-white rounded-md shadow-md">
@@ -58,8 +58,8 @@ const Portfolios = () => {
 
       {/* Product Cards */}
       <div className="grid grid-cols-3 gap-4 mb-6 my-4">
-        {ourTeams.map((team, i) => {
-          return <PortfolioCard key={i} team={team}></PortfolioCard>;
+        {portfolioData?.data?.map((portfolio, i) => {
+          return <PortfolioCard key={i} portfolio={portfolio}></PortfolioCard>;
         })}
       </div>
     </div>

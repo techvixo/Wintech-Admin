@@ -34,23 +34,23 @@ const HeroBanner = () => {
 
   const handleAddSlider = async (event) => {
     event.preventDefault();
+    const formData = new FormData();
     const form = event.target;
     const title_en = form.title_en.value;
     const title_cn = form.title_cn.value;
     const description_en = form.description_en.value;
     const description_cn = form.description_cn.value;
     const link = form.link.value;
-
-    const bannerData = {
-      title_en: title_en,
-      title_cn: title_cn,
-      description_en: description_en,
-      description_cn: description_cn,
-      image: previewImage, // Use the base64 image string here
-      link: link,
-    };
+    formData.append("name_en", title_en);
+    formData.append("name_cn", title_cn);
+    formData.append("description_en", description_en);
+    formData.append("description_cn", description_cn);
+    formData.append("link", link);
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    }
     try {
-      const response = await axios.post(`${BASEURL}/hero/create`, bannerData, {
+      const response = await axios.post(`${BASEURL}/hero/create`, formData, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -141,28 +141,28 @@ const HeroBanner = () => {
             <div className="w-full flex gap-4 items-center">
               <div className="w-full ">
                 <div className="grid grid-cols-2 gap-2 w-full">
-                <div className="form-control w-full">
-                  <label className="label">
-                    <span className="label-text">Title English</span>
-                  </label>
-                  <input
-                    name="title_en"
-                    type="text"
-                    placeholder="Enter the banner title"
-                    className="input input-sm   input-bordered w-full"
-                  />
-                </div>
-                <div className="form-control w-full">
-                  <label className="label">
-                    <span className="label-text">Title Chines</span>
-                  </label>
-                  <input
-                    name="title_cn"
-                    type="text"
-                    placeholder="Enter the banner title"
-                    className="input input-sm   input-bordered w-full"
-                  />
-                </div>
+                  <div className="form-control w-full">
+                    <label className="label">
+                      <span className="label-text">Title English</span>
+                    </label>
+                    <input
+                      name="title_en"
+                      type="text"
+                      placeholder="Enter the banner title"
+                      className="input input-sm   input-bordered w-full"
+                    />
+                  </div>
+                  <div className="form-control w-full">
+                    <label className="label">
+                      <span className="label-text">Title Chines</span>
+                    </label>
+                    <input
+                      name="title_cn"
+                      type="text"
+                      placeholder="Enter the banner title"
+                      className="input input-sm   input-bordered w-full"
+                    />
+                  </div>
                   <div className="form-control">
                     <label className="label">
                       <span className="label-text">description English</span>
