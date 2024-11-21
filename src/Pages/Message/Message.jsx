@@ -154,7 +154,7 @@ const Message = () => {
                   </span>
                 </button>
                 <button
-                  className="text-gray-500 text-lg font-semibold text-red-500 "
+                  className="text-gray-500 text-lg font-semibold text-red-500"
                   onClick={() => setSelectedUser(null)}
                 >
                   ✕
