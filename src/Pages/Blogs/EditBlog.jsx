@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import defaultImg from "../../assets/default-img.png"
 import DescriptionInput from "./DescriptionInput";
 import BlogTags from "./BlogTags";
+import Loader from "../Shared/Loader/Loader";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import BASEURL from "../../../Constants";
+import { useParams } from "react-router-dom";
 const EditBlog = () => {
-  const [imagePreview, setImagePreview] = useState(defaultImg); // Replace with your default image URL
+  const [imagePreview, setImagePreview] = useState(null); // Replace with your default image URL
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const {id} = useParams();
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -13,15 +18,30 @@ const EditBlog = () => {
       setImagePreview(URL.createObjectURL(file)); // Create a preview URL for the uploaded image
     }
   };
-  const data={
-    id: 1,
-    name: "Sultan Mahmud",
-    role:"Developer",
-    experience:"2",
-    language:"English",
-    address:"Dhaka, Bangladesh",
-    university:"Uttara University",
-   }
+  // <<<<<<<<< Blogs Data Recived Here.. >>>>>>>>>>
+  const {
+    data: blog = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: async () => {
+      const response = await axios.get(`${BASEURL}/blog/${id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      return response.data;
+    },
+  });
+
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
+
+  console.log(blog.data);
   
   return (
     <div className="p-5 rounded-md shadow-md bg-white">
@@ -34,10 +54,21 @@ const EditBlog = () => {
           <div className="flex flex-col gap-5 py-3">
             {/*========== Product Basic=========== */}
             <div className="flex flex-col gap-2">
-              <p className="font-semibold text-[#344767] text-sm">Post Title</p>
+              <p className="font-semibold text-[#344767] text-sm">Post Title (English)</p>
               <input
                 type="text"
-                name=""
+                name="title_en"
+                defaultValue={blog?.data?.name_en}
+                placeholder="Post Title"
+                className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="font-semibold text-[#344767] text-sm">Post Title (Chines)</p>
+              <input
+                type="text"
+                name="title_cn"
+                defaultValue={blog?.data?.name_cn}
                 placeholder="Post Title"
                 className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
               />
@@ -95,7 +126,7 @@ const EditBlog = () => {
           </div>
         </div>
       <div className="flex justify-center pt-14 w-2/3">
-      {imagePreview && (
+      {imagePreview ? 
               <div className="image-preview relative  w-52 h-52 overflow-hidden rounded-lg mr-4">
                 <img
                   src={imagePreview}
@@ -106,7 +137,18 @@ const EditBlog = () => {
                   CURRENT IMAGE PREVIEW
                 </div>
               </div>
-            )}
+              :
+              <div className="image-preview relative  w-52 h-52 overflow-hidden rounded-lg mr-4">
+                <img
+                  src={`${BASEURL}/${blog?.data?.heading_image}`}
+                  alt="Current Preview"
+                  className="w-full h-full shadow-md rounded-full object-cover"
+                />
+                <div className="absolute top-3 left-12 bg-green-500 text-white text-xs py-1 px-2 rounded">
+                  PREVIOUS IMAGE 
+                </div>
+              </div>
+            }
       </div>
      </div>
     </div>

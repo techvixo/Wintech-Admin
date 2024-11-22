@@ -255,7 +255,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/blog/edit",
+        path: "/blog/edit/:id",
         element: (
           <PrivateRoute>
            <EditBlog></EditBlog>
