@@ -41,8 +41,8 @@ const HeroBanner = () => {
     const description_en = form.description_en.value;
     const description_cn = form.description_cn.value;
     const link = form.link.value;
-    formData.append("name_en", title_en);
-    formData.append("name_cn", title_cn);
+    formData.append("title_en", title_en);
+    formData.append("title_cn", title_cn);
     formData.append("description_en", description_en);
     formData.append("description_cn", description_cn);
     formData.append("link", link);
@@ -90,7 +90,7 @@ const HeroBanner = () => {
   // if (isLoading) {
   //     return <Loader></Loader>
   // }
-  console.log(sliderData.data);
+  // console.log(sliderData.data);
   return (
     <div className="">
       {addActive ? (

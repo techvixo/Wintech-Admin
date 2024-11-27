@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddCategory = () => {
   const [nameEn, setNameEn] = useState("");
@@ -106,12 +106,14 @@ const AddCategory = () => {
           </div>
 
           <div className="flex items-center gap-3 py-2">
-            <button
+        <Link to={"/products/category"}>
+        <button
               type="button"
               className="btn btn-outline btn-info btn-sm px-4"
             >
-              Save Drafts
+              Cancel
             </button>
+        </Link>
             <button type="submit" className="btn btn-info btn-sm px-4">
               Publish Now
             </button>

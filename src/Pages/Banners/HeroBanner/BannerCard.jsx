@@ -300,8 +300,9 @@ const BannerCard = ({ refetch, sliderInfo }) => {
                 <button
                   type="button"
                   onClick={() => handleUpdateSlider(sliderInfo)}
-                  disabled={loader}
-                  className="company_inf_add_btn bg-gradient-to-r from-[#65CBE2] to-[#346FB7] hover:bg-gradient-to-r hover:from-[#346FB7] hover:to-[#65CBE2]  w-full py-2 uppercase"
+                  // disabled={loader}
+                  disabled
+                  className="company_inf_add_btn cursor-wait bg-gradient-to-r from-[#65CBE2] to-[#346FB7] hover:bg-gradient-to-r hover:from-[#346FB7] hover:to-[#65CBE2]  w-full py-2 uppercase"
                 >
                   {loader ? "Loading.." : "Update"}
                 </button>

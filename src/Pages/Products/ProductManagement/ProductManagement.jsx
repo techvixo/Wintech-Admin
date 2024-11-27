@@ -10,19 +10,20 @@ const ProductManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isDelete, setIsDelete] = useState(false);
   const [products, setProducts] = useState([]);
-  const itemsPerPage = 3;
-// console.log(products)
+  const itemsPerPage = 6;
+  
+  // Fetch products from the API using Axios
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${BASEURL}/product/all`);
+      setProducts(response.data.data);
+      // toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.response.data.error);
+    }
+  };
   useEffect(() => {
-    // Fetch products from the API using Axios
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`${BASEURL}/product/all`);
-        setProducts(response.data.data);
-        // toast.success(response.data.message);
-      } catch (error) {
-        toast.error(error.response.data.error);
-      }
-    };
+  
     fetchProducts();
   }, [isDelete]); // Empty dependency array to run only once when the component mounts
 
@@ -71,7 +72,7 @@ const ProductManagement = () => {
       <div className="grid grid-cols-3 gap-4 mb-6 my-4">
         { 
           currentItems?.map((product, i) => (
-            <ProductCard key={i} product={product} setIsDelete={setIsDelete}/>
+            <ProductCard key={i} fetchProducts={fetchProducts} product={product} setIsDelete={setIsDelete}/>
           ))
         }
       </div>

@@ -6,7 +6,7 @@ import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ product, setIsDelete }) => {
+const ProductCard = ({ product, fetchProducts, setIsDelete }) => {
   // console.log(product)
   const [isEditing, setIsEditing] = useState(false);
   const [editedProduct, setEditedProduct] = useState({
@@ -17,7 +17,7 @@ const ProductCard = ({ product, setIsDelete }) => {
     category: product.category?.categoryId,
     images: product.images || [],
   });
-  // console.log(editedProduct)
+ 
   const [imagePreviews, setImagePreviews] = useState(
     product.images?.length > 0
       ? product.images.map((img) => `${BASEURL}/${img}`)
@@ -25,7 +25,7 @@ const ProductCard = ({ product, setIsDelete }) => {
   );
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-
+  console.log(imagePreviews)
   useEffect(() => {
     // Fetch categories from the API
     const fetchCategories = async () => {
@@ -87,6 +87,7 @@ const ProductCard = ({ product, setIsDelete }) => {
       if (response.data.status === "success") {
         toast.success(response.data.message);
         setIsEditing(false);
+        fetchProducts()
       } else {
         toast.error("Failed to update product.");
       }
@@ -129,7 +130,7 @@ const ProductCard = ({ product, setIsDelete }) => {
         : [defaultImg]
     );
   };
-
+// console.log(  product.images[0]);
   return (
     <div className="flex flex-col gap-2 rounded-lg shadow p-4">
       {isEditing ? (
@@ -213,10 +214,10 @@ const ProductCard = ({ product, setIsDelete }) => {
         <>
           <div className="flex flex-wrap gap-2">
             {product.images?.length > 0 ? (
-              product.images.map((img, index) => (
+              product?.images.slice(0, 1).map((img, index) => (
                 <img
                   key={index}
-                  src={`${BASEURL}/${img}`}
+                  src={`${BASEURL}/${product.images[0]}`}
                   alt="Product"
                   className="w-full h-32 object-cover rounded"
                 />
