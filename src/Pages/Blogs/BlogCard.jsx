@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import defaultImg from "../../assets/default-img.png"
 import { Link } from "react-router-dom";
 import BASEURL from "../../../Constants";
-const BlogCard = ({blog}) => {
+import ConfirmationModal from "../Shared/ConfirmationModal/ConfirmationModal";
+import axios from "axios";
+import toast from "react-hot-toast";
+const BlogCard = ({blog, refetch}) => {
   const {_id, heading_image, name_cn, name_en, description_cn, description_en, createdAt } = blog;
+  const [deleteCertificate, setDeleteCertificate] = useState(null);
+
+  const cancelModal = () => {
+    setDeleteCertificate(null)
+};
+    //============================================================
+    // <<<<<<<<< Certificate Delete function here >>>>>>>>>>
+    // ===========================================================
+    const handleDeleteCertificate = async (blog) => {
+      try {
+          const response = await axios.delete(`${BASEURL}/blog/delete/${blog?._id}`, {
+              headers: {
+                  Authorization:  localStorage.getItem("token")
+              }
+          });
+
+          toast.success(`${response.data.message}`)
+          console.log(response.data);
+          refetch()
+          return response.data;
+      } catch (error) {
+          console.log(error);
+      }
+
+  }
   return (
     <div  className="flex flex-col gap-2 rounded-lg shadow p-4">
       <img
@@ -38,13 +66,18 @@ const BlogCard = ({blog}) => {
         >
           Edit
         </Link>
-        <button
-          // onClick={() => handleDelete(blog.id)}
-          className="btn btn-outline btn-error btn-sm px-4"
-        >
-          Delete
-        </button>
+        <label onClick={() => setDeleteCertificate(blog)} htmlFor="confirmation-modal"  className="btn btn-outline btn-error btn-sm px-4"> Delete</label>
       </div>
+      {
+                deleteCertificate && <ConfirmationModal
+                    title={`Are you sure you want to delete?`}
+                    message={`If you delete ${blog?.name_en}. It cannot be undo`}
+                    closeModal={cancelModal}
+                    successAction={handleDeleteCertificate}
+                    successButton={`Delete`}
+                    modalData={deleteCertificate}
+                ></ConfirmationModal>
+            }
     </div>
   );
 };

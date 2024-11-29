@@ -55,7 +55,7 @@ const Blogs = () => {
       {blogsData?.data?.length > 0 ? (
         <div className="grid grid-cols-3 gap-4 mb-6 my-4">
           {blogsData?.data?.map((blog, i) => {
-            return <BlogCard key={i} blog={blog}></BlogCard>;
+            return <BlogCard refetch={refetch} key={i} blog={blog}></BlogCard>;
           })}
         </div>
       ) : (

@@ -39,8 +39,8 @@ const AddMachine = () => {
         }
       );
       console.log(response);
-      toast.success(`About banner created successful`);
-
+      toast.success(`Machine created successful`);
+      navigate("/home/machine")
     } catch (error) {
       console.log(error);
       toast.error(`${error.response.data.error}`);

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const DescriptionInput = () => {
+const DescriptionInput = ({descriptions, setDescriptions, language}) => {
+  // const [descriptions, setDescriptions] = useState([]); // To store all added descriptions
   const [description, setDescription] = useState(''); // To store the current input
-  const [descriptions, setDescriptions] = useState([]); // To store all added descriptions
   const [editIndex, setEditIndex] = useState(null); // Index of the description being edited
 
   // Function to add or update a description
@@ -34,11 +34,11 @@ const DescriptionInput = () => {
     setDescription(descriptions[index]);
     setEditIndex(index);
   };
-
+console.log(descriptions);
   return (
     <div className="flex flex-col gap-2">
       <p className="font-semibold text-[#344767] text-sm">
-        Post Description (You can add multiple texts)
+        Post Description for {language} (You can add multiple texts)
       </p>
       <div className="relative">
         <textarea

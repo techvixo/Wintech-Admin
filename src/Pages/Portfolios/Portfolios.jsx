@@ -31,7 +31,7 @@ const Portfolios = () => {
   if (isLoading) {
       return <Loader></Loader>
   }
-  console.log(portfolioData.data);
+  // console.log(portfolioData.data);
 
 
   return (
@@ -59,7 +59,7 @@ const Portfolios = () => {
       {/* Product Cards */}
       <div className="grid grid-cols-3 gap-4 mb-6 my-4">
         {portfolioData?.data?.map((portfolio, i) => {
-          return <PortfolioCard key={i} portfolio={portfolio}></PortfolioCard>;
+          return <PortfolioCard refetch={refetch} key={i} portfolio={portfolio}></PortfolioCard>;
         })}
       </div>
     </div>

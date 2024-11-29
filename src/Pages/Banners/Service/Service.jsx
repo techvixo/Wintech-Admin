@@ -33,7 +33,7 @@ const Service = () => {
     },
   });
 
-  console.log(bannerData.data);
+  // console.log(bannerData.data);
 
   const bannerServiceHandler = async () => {
     const formData = new FormData();

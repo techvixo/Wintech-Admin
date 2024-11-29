@@ -4,18 +4,26 @@ import { useNavigate } from "react-router-dom";
 import BASEURL from "../../../../Constants";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Loader from "../../Shared/Loader/Loader";
+import { useQuery } from "@tanstack/react-query";
 const FeaturedVideo = () => {
   const navigate = useNavigate();
-  // const [imagePreview, setImagePreview] = useState(null); // Replace with your default image URL
-  // const [selectedFile, setSelectedFile] = useState(null);
   const token = localStorage.getItem("token");
-  // const handleImageUpload = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     setSelectedFile(file);
-  //     setImagePreview(URL.createObjectURL(file)); // Create a preview URL for the uploaded image
-  //   }
-  // };
+      // <<<<<<<<< Home Data Recived Here.. >>>>>>>>>>
+      const { data: homeData = [], isLoading, refetch } = useQuery({
+        queryKey: ["home-data"],
+        queryFn: async () => {
+          const response = await axios.get(`${BASEURL}/web-home`, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+          });
+          return response.data;
+        },
+      });
+    
   const createMachine = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -23,13 +31,6 @@ const FeaturedVideo = () => {
       left_side_video_url: form.url.value || null,
       right_side_video_url: form.url.value || null
     }
-    // const title_cn = form.title_cn.value;
-    // const formData = new FormData();
-    // formData.append("title_en", title_en);
-    // formData.append("title_cn", title_cn);
-    // if (selectedFile) {
-    //   formData.append("image", selectedFile);
-    // }
     try {
       const response = await axios.post(
         `${BASEURL}/web-home/featured-video/add`,
@@ -42,12 +43,19 @@ const FeaturedVideo = () => {
         }
       );
       console.log(response);
+      refetch()
       toast.success(`Featured video added!`);
     } catch (error) {
       console.log(error);
       toast.error(`${error.response.data.error}`);
     }
   };
+
+    if (isLoading) {
+      return <Loader></Loader>;
+    }
+    
+    // console.log(homeData.data.featured_video);
   return (
     <div className="p-5 rounded-md shadow-md bg-white">
       <HomeMenu></HomeMenu>
@@ -61,6 +69,7 @@ const FeaturedVideo = () => {
            <input
               type="url"
               required
+              defaultValue={homeData?.data?.featured_video?.left_side_video}
               name="url"
               placeholder="provide video url"
               className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
@@ -89,6 +98,7 @@ const FeaturedVideo = () => {
             <input
               type="url"
               required
+              defaultValue={homeData?.data?.featured_video?.right_side_video}
               name="url"
               placeholder="provide video url"
               className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "

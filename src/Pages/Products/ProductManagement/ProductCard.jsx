@@ -25,7 +25,7 @@ const ProductCard = ({ product, fetchProducts, setIsDelete }) => {
   );
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-  console.log(imagePreviews)
+  // console.log(imagePreviews)
   useEffect(() => {
     // Fetch categories from the API
     const fetchCategories = async () => {

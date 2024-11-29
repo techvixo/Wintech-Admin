@@ -5,7 +5,7 @@ import defaultImg from "../../../assets/default-img.png";
 import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
 
-const MachineCard = ({ machine, setIsDelete }) => {
+const MachineCard = ({ machine, fetchMachines, setIsDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedMachine, setEditedMachine] = useState({
     title_en: machine.title_en,
@@ -49,6 +49,7 @@ const MachineCard = ({ machine, setIsDelete }) => {
       if (response.status === 200) {
         toast.success("Machine updated successfully");
         setIsEditing(false);
+        fetchMachines()
       } else {
         toast.error("Failed to update machine.");
       }
