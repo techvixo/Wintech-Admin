@@ -207,7 +207,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/about/partners/edit",
+        path: "/about/partners/edit/:id",
         element: (
           <PrivateRoute>
            <EditPartner></EditPartner>

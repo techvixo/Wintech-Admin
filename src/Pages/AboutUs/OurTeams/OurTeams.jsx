@@ -12,17 +12,16 @@ const OurTeams = () => {
   const [isDelete, setIsDelete] = useState(false);
   // console.log(ourTeams)
 
+  const fetchTeams = async () => {
+    try {
+      const response = await axios.get(`${BASEURL}/our-team/all`);
+      setOurTeams(response.data.data);
+    } catch (err) {
+      toast.error(err.response.data.error);
+    }
+  };
   useEffect(() => {
-    const fetchTeams = async () => {
-      try {
-        const response = await axios.get(`${BASEURL}/our-team/all`);
-        setOurTeams(response.data.data);
-      } catch (err) {
-        toast.error(err.response.data.error);
-      }
-    };
-
-    fetchTeams();
+  fetchTeams();
   }, [isDelete]);
 
   return (
@@ -54,6 +53,7 @@ const OurTeams = () => {
             <TeamCard
               key={i}
               team={team}
+              fetchTeams={fetchTeams}
               setIsDelete={setIsDelete}
             ></TeamCard>
           );
