@@ -33,7 +33,7 @@ const Partners = () => {
     return <Loader></Loader>;
   }
 
-  console.log(partnerData.data);
+  // console.log(partnerData.data);
   return (
     <div className="p-5 bg-white rounded-md shadow-md">
       <AboutMenu></AboutMenu>

@@ -48,6 +48,9 @@ const HeroBanner = () => {
     formData.append("link", link);
     if (selectedImage) {
       formData.append("image", selectedImage);
+    }else{
+      toast.error("Please chose your banner image!")
+      return;
     }
     try {
       const response = await axios.post(`${BASEURL}/hero/create`, formData, {

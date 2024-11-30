@@ -17,7 +17,7 @@ const RecentUpdateFeed = ({ dashboard }) => {
       <div className="grid grid-cols-2 gap-4 text-xs text-gray-500 mb-4">
         <span>RECENT PRODUCT UPDATES</span>
         {/* <span className="w-full text-center">RECENT BLOG POST</span> */}
-        <span className="">RECENT BLOG POST</span>
+        <span className="w-full text-center">RECENT BLOG POST</span>
       </div>
 
       <div className="flex flex-col space-y-4">

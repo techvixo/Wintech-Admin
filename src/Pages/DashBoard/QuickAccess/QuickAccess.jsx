@@ -15,7 +15,7 @@ const QuickAccess = ({ dashboard }) => {
           <div className="flex items-center justify-center w-1/3 bg-white p-4 shadow-md rounded-md">
             <h4 className="text-xl font-bold text-gray-800">
               {" "}
-              Hi, {dashboard.user.fullName}
+              Hi, {dashboard?.user?.fullName}
             </h4>
           </div>
           {/* Quick Access Section */}
@@ -56,7 +56,7 @@ const QuickAccess = ({ dashboard }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-5">
           <div className="bg-white rounded-md shadow-md p-4 flex flex-col items-center justify-center gap-2">
             <p className="text-4xl font-bold text-[#4179B6]">
-              {dashboard.totalVisitors}
+              {dashboard?.totalVisitors}
             </p>
             <p className="text-gray-600 font-semibold text-sm">
               Total Website Visit
@@ -65,7 +65,7 @@ const QuickAccess = ({ dashboard }) => {
           </div>
           <div className="bg-white rounded-md shadow-md p-4 flex flex-col items-center justify-center gap-2">
             <p className="text-4xl font-bold text-[#4179B6]">
-              {dashboard.totalProduct}
+              {dashboard?.totalProduct}
             </p>
             <p className="text-gray-600 font-semibold text-sm">
               New Products Added
@@ -74,7 +74,7 @@ const QuickAccess = ({ dashboard }) => {
           </div>
           <div className="bg-white rounded-md shadow-md p-4 flex flex-col items-center justify-center gap-2">
             <p className="text-4xl font-bold text-[#4179B6]">
-              {dashboard.totalBlog}
+              {dashboard?.totalBlog}
             </p>
             <p className="text-gray-600 font-semibold text-sm">
               Recent Blog Post
@@ -83,7 +83,7 @@ const QuickAccess = ({ dashboard }) => {
           </div>
           <div className="bg-white rounded-md shadow-md p-4 flex flex-col items-center justify-center gap-2">
             <p className="text-4xl font-bold text-[#4179B6]">
-              {dashboard.totalPortfolio}
+              {dashboard?.totalPortfolio}
             </p>
             <p className="text-gray-600 font-semibold text-sm">Portfolio</p>
             {/* <p className="text-xs text-gray-400">Review Project</p> */}

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import defaultImg from "../../assets/default-img.png"
 import BASEURL from "../../../Constants";
+import { useLocation, useParams } from "react-router-dom";
 
 const BannerEditor = ({data, setTitleEn, setSubtitleEn, setTitleCn, setSubtitleCn, setSelectedFile, handler}) => {
   const [imagePreview, setImagePreview] = useState(data?.banner_image ? `${BASEURL}/${data?.banner_image}`: defaultImg); // Replace with your default image URL
-  
+  const location = useLocation();
+  // console.log(location.pathname);
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -17,8 +19,8 @@ useEffect(() => {
   setTitleCn(data?.title_cn)
   setSubtitleEn(data?.title_en)
   setSubtitleCn(data?.title_en)
-},[data])
-console.log(imagePreview);
+},[data, location.pathname])
+// console.log(imagePreview);
   return (
     <div className="banner-editor flex p-4 rounded-lg shadow-lg bg-white">
       {/* Left side image preview */}

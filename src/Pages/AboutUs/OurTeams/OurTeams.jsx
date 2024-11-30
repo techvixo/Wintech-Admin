@@ -6,24 +6,30 @@ import SearchAndFilter from "../../Products/SearchAndFilter/SearchAndFilter";
 import AboutMenu from "../AboutMenu";
 import BASEURL from "../../../../Constants";
 import { toast } from "react-toastify";
+import Loader from "../../Shared/Loader/Loader";
+import { useQuery } from "@tanstack/react-query";
 
 const OurTeams = () => {
-  const [ourTeams, setOurTeams] = useState([]);
   const [isDelete, setIsDelete] = useState(false);
-  // console.log(ourTeams)
 
-  const fetchTeams = async () => {
-    try {
-      const response = await axios.get(`${BASEURL}/our-team/all`);
-      setOurTeams(response.data.data);
-    } catch (err) {
-      toast.error(err.response.data.error);
-    }
-  };
-  useEffect(() => {
-  fetchTeams();
-  }, [isDelete]);
+  // <<<<<<<<< Certificate Data Recived Here.. >>>>>>>>>>
+  const { data: ourTeams = [], isLoading, refetch } = useQuery({
+    queryKey: ["our-team-data"],
+    queryFn: async () => {
+      const response = await axios.get(`${BASEURL}/our-team/all`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      return response.data;
+    },
+  });
 
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <div className="p-5 bg-white rounded-md shadow-md">
       <AboutMenu></AboutMenu>
@@ -46,19 +52,24 @@ const OurTeams = () => {
           </Link>
         </div>
       </div>
-
+      {
+      ourTeams?.data?.length > 0 
+      ?
       <div className="grid grid-cols-3 gap-4 mb-6 my-4">
-        {ourTeams.map((team, i) => {
+        {ourTeams?.data?.map((team, i) => {
           return (
             <TeamCard
               key={i}
               team={team}
-              fetchTeams={fetchTeams}
+              fetchTeams={refetch}
               setIsDelete={setIsDelete}
             ></TeamCard>
           );
         })}
       </div>
+    :
+    <h2 className='text-2xl font-bold text-gray-300 text-center py-20'>No Team Member Found!</h2>
+     }
     </div>
   );
 };

@@ -49,10 +49,10 @@ const BlogCard = ({blog, refetch}) => {
      {name_cn}
       </p>
       <p className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm ">
-      {description_en[0]}
+      {description_en[0]?.slice(0,120) + ".."}
       </p>
       <p className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm ">
-      {description_cn[0]}
+      {description_cn[0]?.slice(0,120) + ".."}
       </p>
       <p className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm ">
       Blog Status: Active

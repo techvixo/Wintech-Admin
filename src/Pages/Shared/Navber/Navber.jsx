@@ -25,27 +25,7 @@ const Navber = () => {
     location?.pathname === "/"
       ? "Overview"
       : pathSegments[pathSegments?.length - 1];
-  // <<<<<<<<< Profile info Data Recived >>>>>>>>>>
-  const { data: profileData = [], isLoading } = useQuery({
-    queryKey: ["profileData"],
-    queryFn: async () => {
-      try {
-        const response = await axios.get(`${BASEURL}/user/profile/${id}`, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token"),
-          },
-        });
-        return response.data;
-      } catch (error) {
-        setAuthenticated(error?.response?.data?.message);
-        // console.log("Responds:", error?.response?.data?.message);
-        throw error;
-      }
-    },
-  });
-
+ 
   const handleSignOut = async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("isVerified");

@@ -3,6 +3,8 @@ import BannerEditor from "../BannerEditor";
 import axios from "axios";
 import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
+import Loader from "../../Shared/Loader/Loader";
+import { useQuery } from "@tanstack/react-query";
 
 const Contact = () => {
   const [titleEn, setTitleEn] = useState("");
@@ -12,7 +14,24 @@ const Contact = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const token = localStorage.getItem("token");
-
+  // <<<<<<<<< Banner Data Recived Here.. >>>>>>>>>>
+  const {
+    data: bannerData = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["banner-data"],
+    queryFn: async () => {
+      const response = await axios.get(`${BASEURL}/web-banner/contact`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      return response.data;
+    },
+  });
   const bannerContactHandler = async () => {
     const formData = new FormData();
     formData.append("title_en", titleEn);
@@ -62,10 +81,13 @@ const Contact = () => {
       });
     }
   };
-
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <div>
       <BannerEditor
+          data={bannerData?.data}
         setTitleEn={setTitleEn}
         setSubtitleEn={setSubtitleEn}
         setTitleCn={setTitleCn}

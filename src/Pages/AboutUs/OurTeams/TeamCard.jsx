@@ -75,7 +75,7 @@ const TeamCard = ({ team, fetchTeams, setIsDelete }) => {
             : `${BASEURL}/${team.image}` || defaultImg
         }
         alt="team"
-        className="w-full h-32 object-cover rounded"
+        className="w-full h-60 object-cover rounded"
       />
       {isEditing ? (
         <div className="flex flex-col gap-2">

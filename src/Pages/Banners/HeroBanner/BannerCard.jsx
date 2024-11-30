@@ -8,14 +8,9 @@ import BASEURL from "../../../../Constants";
 
 const BannerCard = ({ refetch, sliderInfo }) => {
   const {
-    hotel_id,
-    id,
     _id,
-    title,
-    status,
     link,
     image,
-    description,
     description_cn,
     description_en,
     title_cn,
@@ -32,9 +27,6 @@ const BannerCard = ({ refetch, sliderInfo }) => {
   const [newLink, setNewLink] = useState(link);
   const [loader, setLoader] = useState(false);
 
-  const handleEdinImgActive = () => {
-    setEditImgActive(true);
-  };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setSelectedImage(file);
@@ -57,24 +49,21 @@ const BannerCard = ({ refetch, sliderInfo }) => {
   // ===========================================================
   const handleUpdateSlider = async (sliderInfo) => {
     setLoader(true);
-    // Create the data object
-    let data = {
-      title: titleEn,
-      description: desEn,
-      link: newLink,
-    };
-    // Check if previewImage is not null and add the image property
-    if (previewImage) {
-      data = {
-        ...data, // Spread the existing properties
-        image: previewImage, // Add the new property
-      };
+    const formData = new FormData();
+
+    formData.append("title_en", titleEn);
+    formData.append("title_cn", titleCn);
+    formData.append("description_en", desEn);
+    formData.append("description_cn", desCn);
+    formData.append("link", newLink);
+
+    if (selectedImage) {
+      formData.append("image", selectedImage);
     }
-    console.log(data);
     try {
       const response = await axios.patch(
-        `${BASEURL}/admin/promotion/${sliderInfo?._id}`,
-        data,
+        `${BASEURL}/hero/update/${sliderInfo?._id}`,
+        formData,
         {
           headers: {
             Authorization: localStorage.getItem("token"),
@@ -119,7 +108,6 @@ const BannerCard = ({ refetch, sliderInfo }) => {
     }
     // console.log(sliderInfo)
   };
-  
 
   useEffect(() => {
     setTitleEn(sliderInfo?.title_en);
@@ -128,7 +116,7 @@ const BannerCard = ({ refetch, sliderInfo }) => {
     setDesCn(sliderInfo?.description_cn);
     setNewLink(sliderInfo?.link);
   }, [sliderInfo]);
-  console.log(sliderInfo);
+  // console.log(sliderInfo);
   return (
     <form className="form w-full flex bg-white  shadow-md rounded-md p-5">
       <div className="md:w-1/4 w-full ">
@@ -206,74 +194,74 @@ const BannerCard = ({ refetch, sliderInfo }) => {
         </div>
       </div>
       <div className="w-full md:w-3/4 p-2 relative">
-      <div className="w-full">
-            <div className="grid grid-cols-2 gap-2 w-full">
-              <div className="form-control w-full">
-                <label className="label">
-                  <span className="label-text">Title in English</span>
-                </label>
-                <input
-                  name="title"
-                  type="text"
-                  value={titleEn}
-                  onChange={(e) => setTitleEn(e.target.value)}
-                  placeholder="Enter your slider title"
-                  className="input input-sm   input-bordered w-full"
-                />
-              </div>
-              <div className="form-control w-full">
-                <label className="label">
-                  <span className="label-text">Title in Chines</span>
-                </label>
-                <input
-                  name="title"
-                  type="text"
-                  value={titleCn}
-                  onChange={(e) => setTitleCn(e.target.value)}
-                  placeholder="Enter your slider title"
-                  className="input input-sm   input-bordered w-full"
-                />
-              </div>
+        <div className="w-full">
+          <div className="grid grid-cols-2 gap-2 w-full">
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Title in English</span>
+              </label>
+              <input
+                name="title"
+                type="text"
+                value={titleEn}
+                onChange={(e) => setTitleEn(e.target.value)}
+                placeholder="Enter your slider title"
+                className="input input-sm   input-bordered w-full"
+              />
             </div>
-            <div className="grid grid-cols-2 gap-2 w-full">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">description in English</span>
-                </label>
-                <textarea
-                  name="disc"
-                  value={desEn}
-                  onChange={(e) => setDesEn(e.target.value)}
-                  className="textarea textarea-bordered w-full textarea-xs"
-                  placeholder="Description"
-                ></textarea>
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">description in Chines</span>
-                </label>
-                <textarea
-                  name="disc"
-                  value={desCn}
-                  onChange={(e) => setDesCn(e.target.value)}
-                  className="textarea textarea-bordered w-full textarea-xs"
-                  placeholder="Description"
-                ></textarea>
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Link (optional)</span>
-                </label>
-                <textarea
-                  name="link"
-                  value={newLink}
-                  onChange={(e) => setNewLink(e.target.value)}
-                  className="textarea textarea-bordered w-full textarea-xs"
-                  placeholder="Provite Your Link"
-                ></textarea>
-              </div>
-              <div className=" md:px-4 flex flex-col gap-2 mt-2 items-center justify-center">
-                {/* <div className="flex w-full py-2 items-center justify-between">
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Title in Chines</span>
+              </label>
+              <input
+                name="title"
+                type="text"
+                value={titleCn}
+                onChange={(e) => setTitleCn(e.target.value)}
+                placeholder="Enter your slider title"
+                className="input input-sm   input-bordered w-full"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2 w-full">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">description in English</span>
+              </label>
+              <textarea
+                name="disc"
+                value={desEn}
+                onChange={(e) => setDesEn(e.target.value)}
+                className="textarea textarea-bordered w-full textarea-xs"
+                placeholder="Description"
+              ></textarea>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">description in Chines</span>
+              </label>
+              <textarea
+                name="disc"
+                value={desCn}
+                onChange={(e) => setDesCn(e.target.value)}
+                className="textarea textarea-bordered w-full textarea-xs"
+                placeholder="Description"
+              ></textarea>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Link (optional)</span>
+              </label>
+              <textarea
+                name="link"
+                value={newLink}
+                onChange={(e) => setNewLink(e.target.value)}
+                className="textarea textarea-bordered w-full textarea-xs"
+                placeholder="Provite Your Link"
+              ></textarea>
+            </div>
+            <div className=" md:px-4 flex flex-col gap-2 mt-2 items-center justify-center">
+              {/* <div className="flex w-full py-2 items-center justify-between">
                   {!status == 1 ? (
                     <span className="text-xs font-semibold text-green-500">
                       Active
@@ -290,25 +278,25 @@ const BannerCard = ({ refetch, sliderInfo }) => {
                        checked={status}
                   />
                 </div> */}
-                <label
-                  onClick={() => setDeleteingSlider(sliderInfo)}
-                  htmlFor="confirmation-modal"
-                  className="btn btn-outline btn-error w-full btn-sm"
-                >
-                  Remove
-                </label>
-                <button
-                  type="button"
-                  onClick={() => handleUpdateSlider(sliderInfo)}
-                  // disabled={loader}
-                  disabled
-                  className="company_inf_add_btn cursor-wait bg-gradient-to-r from-[#65CBE2] to-[#346FB7] hover:bg-gradient-to-r hover:from-[#346FB7] hover:to-[#65CBE2]  w-full py-2 uppercase"
-                >
-                  {loader ? "Loading.." : "Update"}
-                </button>
-              </div>
+              <label
+                onClick={() => setDeleteingSlider(sliderInfo)}
+                htmlFor="confirmation-modal"
+                className="btn btn-outline btn-error w-full btn-sm"
+              >
+                Remove
+              </label>
+              <button
+                type="button"
+                onClick={() => handleUpdateSlider(sliderInfo)}
+                disabled={loader}
+                // disabled
+                className="company_inf_add_btn bg-gradient-to-r from-[#65CBE2] to-[#346FB7] hover:bg-gradient-to-r hover:from-[#346FB7] hover:to-[#65CBE2]  w-full py-2 uppercase"
+              >
+                {loader ? "Loading.." : "Update"}
+              </button>
             </div>
           </div>
+        </div>
       </div>
 
       {deleteingSlider && (
