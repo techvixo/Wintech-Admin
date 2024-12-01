@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import axios from "axios";
 import defaultImg from "../../../assets/default-img.png";
@@ -10,8 +9,8 @@ const MachineCard = ({ machine, fetchMachines, setIsDelete }) => {
   const [editedMachine, setEditedMachine] = useState({
     title_en: machine.title_en,
     title_cn: machine.title_cn,
-    image: machine.image,
   });
+  const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(
     machine.image ? `${BASEURL}/${machine.image}` : defaultImg
   );
@@ -27,7 +26,7 @@ const MachineCard = ({ machine, fetchMachines, setIsDelete }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setEditedMachine((prev) => ({ ...prev, image: file }));
+      setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
     }
   };
@@ -37,19 +36,21 @@ const MachineCard = ({ machine, fetchMachines, setIsDelete }) => {
       const formData = new FormData();
       formData.append("title_en", editedMachine.title_en);
       formData.append("title_cn", editedMachine.title_cn);
-      if (editedMachine.image !== machine.image) {
-        formData.append("image", editedMachine.image);
+
+      if (imageFile) {
+        formData.append("image", imageFile);
       }
 
       const response = await axios.patch(
         `${BASEURL}/web-home/cnc-machine-part/update/${machine._id}`,
         formData,
-        { headers: { 'Content-Type': 'multipart/form-data' } }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
+
       if (response.status === 200) {
         toast.success("Machine updated successfully");
         setIsEditing(false);
-        fetchMachines()
+        fetchMachines();
       } else {
         toast.error("Failed to update machine.");
       }
@@ -64,7 +65,7 @@ const MachineCard = ({ machine, fetchMachines, setIsDelete }) => {
       const response = await axios.delete(`${BASEURL}/web-home/cnc-machine-part/delete/${id}`);
       if (response.status === 200) {
         toast.success("Machine deleted successfully");
-        setIsDelete(true)
+        setIsDelete(true);
       } else {
         toast.error("Failed to delete machine.");
       }
@@ -83,8 +84,8 @@ const MachineCard = ({ machine, fetchMachines, setIsDelete }) => {
     setEditedMachine({
       title_en: machine.title_en,
       title_cn: machine.title_cn,
-      image: machine.image,
     });
+    setImageFile(null);
     setImagePreview(machine.image ? `${BASEURL}/${machine.image}` : defaultImg);
   };
 
@@ -134,7 +135,7 @@ const MachineCard = ({ machine, fetchMachines, setIsDelete }) => {
       ) : (
         <>
           <img
-            src={`${BASEURL}/${machine.image}` || defaultImg}
+            src={`${BASEURL}/${machine?.image}` || defaultImg}
             alt="team"
             className="w-full h-32 object-cover rounded"
           />

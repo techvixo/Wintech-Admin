@@ -20,11 +20,11 @@ const BannerCard = ({ refetch, sliderInfo }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [deleteingSlider, setDeleteingSlider] = useState(null);
-  const [titleEn, setTitleEn] = useState(title_en);
-  const [titleCn, setTitleCn] = useState(title_cn);
-  const [desEn, setDesEn] = useState(description_en);
-  const [desCn, setDesCn] = useState(description_cn);
-  const [newLink, setNewLink] = useState(link);
+  const [titleEn, setTitleEn] = useState(title_en  || "");
+  const [titleCn, setTitleCn] = useState(title_cn || "");
+  const [desEn, setDesEn] = useState(description_en || "");
+  const [desCn, setDesCn] = useState(description_cn || "");
+  const [newLink, setNewLink] = useState(link || "");
   const [loader, setLoader] = useState(false);
 
   const handleImageChange = (e) => {
@@ -110,11 +110,13 @@ const BannerCard = ({ refetch, sliderInfo }) => {
   };
 
   useEffect(() => {
-    setTitleEn(sliderInfo?.title_en);
-    setTitleCn(sliderInfo?.title_cn);
-    setDesEn(sliderInfo?.description_en);
-    setDesCn(sliderInfo?.description_cn);
-    setNewLink(sliderInfo?.link);
+    if (sliderInfo) {
+      setTitleEn(sliderInfo?.title_en || "");
+      setTitleCn(sliderInfo?.title_cn || "");
+      setDesEn(sliderInfo?.description_en || "");
+      setDesCn(sliderInfo?.description_cn || "");
+      setNewLink(sliderInfo?.link || "");
+    }
   }, [sliderInfo]);
   // console.log(sliderInfo);
   return (
@@ -163,9 +165,8 @@ const BannerCard = ({ refetch, sliderInfo }) => {
               <div className="img p-2 relative w-full mt-1">
                 <span
                   onClick={() => handleCloseNewImage()}
-                  className={`${
-                    previewImage ? "block" : "hidden"
-                  } absolute cursor-pointer right-0 top-4 w-5 h-5 rounded-full flex items-center justify-center bg-red-500 text-white`}
+                  className={`${previewImage ? "block" : "hidden"
+                    } absolute cursor-pointer right-0 top-4 w-5 h-5 rounded-full flex items-center justify-center bg-red-500 text-white`}
                 >
                   <AiOutlineClose></AiOutlineClose>
                 </span>
