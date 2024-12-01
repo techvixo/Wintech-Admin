@@ -5,6 +5,7 @@ import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../Shared/Loader/Loader";
+import UpdateBanner from "../UpdateBanner";
 
 const About = () => {
   const [titleEn, setTitleEn] = useState("");
@@ -22,7 +23,7 @@ const About = () => {
   } = useQuery({
     queryKey: ["banner-data"],
     queryFn: async () => {
-      const response = await axios.get(`${BASEURL}/web-banner/about`, {
+      const response = await axios.get(`${BASEURL}/web-banner/about_us`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -84,8 +85,10 @@ const About = () => {
   if (isLoading) {
     return <Loader></Loader>;
   }
+  console.log(bannerData?.data)
   return (
     <div>
+       {!bannerData?.data?.banner_image ? (
       <BannerEditor
           data={bannerData?.data}
         setTitleEn={setTitleEn}
@@ -95,6 +98,9 @@ const About = () => {
         setSelectedFile={setSelectedFile}
         handler={bannerAboutHandler}
       ></BannerEditor>
+    ) : (
+      <UpdateBanner data={bannerData?.data} refetch={refetch}></UpdateBanner>
+    )}
     </div>
   );
 };

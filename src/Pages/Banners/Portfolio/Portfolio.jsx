@@ -5,6 +5,7 @@ import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../Shared/Loader/Loader";
+import UpdateBanner from "../UpdateBanner";
 
 const Portfolio = () => {
   const [titleEn, setTitleEn] = useState("");
@@ -86,6 +87,7 @@ const Portfolio = () => {
   }
   return (
     <div>
+      {!bannerData?.data?.banner_image ? (
       <BannerEditor
           data={bannerData?.data}
         setTitleEn={setTitleEn}
@@ -95,6 +97,9 @@ const Portfolio = () => {
         setSelectedFile={setSelectedFile}
         handler={bannerPortfolioHandler}
       ></BannerEditor>
+    ) : (
+      <UpdateBanner data={bannerData?.data} refetch={refetch}></UpdateBanner>
+    )}
     </div>
   );
 };

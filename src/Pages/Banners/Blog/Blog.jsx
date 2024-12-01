@@ -5,6 +5,7 @@ import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../Shared/Loader/Loader";
+import UpdateBanner from "../UpdateBanner";
 
 const Blog = () => {
   const [titleEn, setTitleEn] = useState("");
@@ -83,12 +84,12 @@ const Blog = () => {
       });
     }
   };
-
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <div>
-      {isLoading ? (
-        <Loader></Loader>
-      ) : (
+      {!bannerData?.data?.banner_image ? (
         <BannerEditor
           data={bannerData?.data}
           setTitleEn={setTitleEn}
@@ -98,6 +99,8 @@ const Blog = () => {
           setSelectedFile={setSelectedFile}
           handler={bannerBlogHandler}
         ></BannerEditor>
+      ) : (
+        <UpdateBanner data={bannerData?.data} refetch={refetch}></UpdateBanner>
       )}
     </div>
   );

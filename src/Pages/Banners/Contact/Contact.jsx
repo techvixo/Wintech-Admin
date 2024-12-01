@@ -5,6 +5,7 @@ import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
 import Loader from "../../Shared/Loader/Loader";
 import { useQuery } from "@tanstack/react-query";
+import UpdateBanner from "../UpdateBanner";
 
 const Contact = () => {
   const [titleEn, setTitleEn] = useState("");
@@ -22,7 +23,7 @@ const Contact = () => {
   } = useQuery({
     queryKey: ["banner-data"],
     queryFn: async () => {
-      const response = await axios.get(`${BASEURL}/web-banner/contact`, {
+      const response = await axios.get(`${BASEURL}/web-banner/contact_us`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -84,17 +85,22 @@ const Contact = () => {
   if (isLoading) {
     return <Loader></Loader>;
   }
+  console.log(bannerData?.data)
   return (
     <div>
-      <BannerEditor
+      {!bannerData?.data?.banner_image ? (
+        <BannerEditor
           data={bannerData?.data}
-        setTitleEn={setTitleEn}
-        setSubtitleEn={setSubtitleEn}
-        setTitleCn={setTitleCn}
-        setSubtitleCn={setSubtitleCn}
-        setSelectedFile={setSelectedFile}
-        handler={bannerContactHandler}
-      ></BannerEditor>
+          setTitleEn={setTitleEn}
+          setSubtitleEn={setSubtitleEn}
+          setTitleCn={setTitleCn}
+          setSubtitleCn={setSubtitleCn}
+          setSelectedFile={setSelectedFile}
+          handler={bannerContactHandler}
+        ></BannerEditor>
+      ) : (
+        <UpdateBanner data={bannerData?.data} refetch={refetch}></UpdateBanner>
+      )}
     </div>
   );
 };

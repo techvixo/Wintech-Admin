@@ -88,9 +88,10 @@ const Service = () => {
   if (isLoading) {
     return <Loader></Loader>;
   }
+  // console.log(bannerData?.data);
   return (
     <div>
-      {!bannerData?.data?.length > 0 ? (
+      {!bannerData?.data?.banner_image ? (
         <BannerEditor
           data={bannerData?.data}
           setTitleEn={setTitleEn}

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import defaultImg from "../../assets/default-img.png";
 import BASEURL from "../../../Constants";
 import ConfirmationModal from "../Shared/ConfirmationModal/ConfirmationModal";
 import axios from "axios";
@@ -8,12 +7,20 @@ import toast from "react-hot-toast";
 const UpdateBanner = ({ data, refetch }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [titleEn, setTitleEn] = useState("");
-  const [subtitleEn, setSubtitleEn] = useState("");
-  const [titleCn, setTitleCn] = useState("");
-  const [subtitleCn, setSubtitleCn] = useState("");
+  const [titleEn, setTitleEn] = useState(data?.title_en || "");
+  const [titleCn, setTitleCn] = useState(data?.title_cn || "");
+  const [subtitleEn, setSubtitleEn] = useState(data?.description_en || "");
+  const [subtitleCn, setSubtitleCn] = useState(data?.description_cn || "");
   const [deletingBanner, setDeletingBanner] = useState(null);
-
+  // Update state when `data` changes
+  useEffect(() => {
+    if (data) {
+      setTitleEn(data.title_en || "");
+      setTitleCn(data.title_cn || "");
+      setSubtitleEn(data.description_en || "");
+      setSubtitleCn(data.description_cn || "");
+    }
+  }, [data]);
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -24,22 +31,21 @@ const UpdateBanner = ({ data, refetch }) => {
   const cencelModal = () => {
    setDeletingBanner(null);
  };
-
  //============================================================
  // <<<<<<<<< Promotion slider Updated function here >>>>>>>>>>
  // ===========================================================
- const handleUpdateSlider = async (sliderInfo) => {
-   setLoader(true);
+ const handleUpdateSlider = async () => {
    const formData = new FormData();
   const purpose = data?.purpose;
    formData.append("title_en", titleEn);
    formData.append("title_cn", titleCn);
-   formData.append("description_en", desEn);
-   formData.append("description_cn", desCn);
-   formData.append("link", newLink);
+   formData.append("description_en", subtitleEn);
+   formData.append("description_cn", subtitleCn);
+   formData.append("purpose", purpose);
+  //  formData.append("link", newLink);
 
    if (selectedImage) {
-     formData.append("image", selectedImage);
+     formData.append("banner_image", selectedImage);
    }
    try {
      const response = await axios.patch(
@@ -53,14 +59,12 @@ const UpdateBanner = ({ data, refetch }) => {
      );
      toast.success(`${response.data.message}`);
      console.log(response.data);
-     setPreviewImage(null);
+     setImagePreview(null);
      refetch();
-     setLoader(false);
      return response.data;
    } catch (error) {
      console.log(error);
-     toast.error(`${error?.response?.data?.message}`);
-     setLoader(false);
+     toast.error(`${error?.response?.message}`);
      throw new Error(error?.response?.data?.message);
    }
  };
@@ -120,14 +124,14 @@ const UpdateBanner = ({ data, refetch }) => {
         <div className="flex items-center justify-between ">
           <input
             type="text"
-            defaultValue={data?.title_en}
+            value={titleEn}
             onChange={(e) => setTitleEn(e.target.value)}
             placeholder="Title in English"
             className="w-full p-2 mb-2 border border-gray-300 rounded"
           />
         </div>
         <textarea
-          defaultValue={data?.description_en}
+          value={subtitleEn}
           onChange={(e) => setSubtitleEn(e.target.value)}
           placeholder="Subtitle in English"
           className="w-full p-2 mb-4 border border-gray-300 rounded"
@@ -140,14 +144,14 @@ const UpdateBanner = ({ data, refetch }) => {
       <div className="flex items-center justify-between mb-2 ">
           <input
             type="text"
-            defaultValue={data?.title_cn}
+            value={titleCn}
             onChange={(e) => setTitleCn(e.target.value)}
             placeholder="Title in Chinese"
             className="w-full p-2 mb-2 border border-gray-300 rounded"
           />
         </div>
         <textarea
-          defaultValue={data?.description_cn}
+          value={subtitleCn}
           onChange={(e) => setSubtitleCn(e.target.value)}
           placeholder="Subtitle in Chinese"
           className="w-full p-2 mb-4 border border-gray-300 rounded"
@@ -179,7 +183,7 @@ const UpdateBanner = ({ data, refetch }) => {
                 Remove
               </label>
           <button
-            // onClick={handler}
+            onClick={handleUpdateSlider}
             className="bg-blue-500  text-white px-6 uppercase py-2 rounded shadow-md"
           >
             Update New
