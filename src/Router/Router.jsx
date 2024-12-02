@@ -42,6 +42,7 @@ import EditMachine from "../Pages/HomePage/Machines/EditMachine";
 import AddMachine from "../Pages/HomePage/Machines/AddMachine";
 import FeaturedVideo from "../Pages/HomePage/FeaturedVideo/FeaturedVideo";
 import HeroBanner from "../Pages/Banners/HeroBanner/HeroBanner";
+import MangeAdmin from "../Pages/Settings/MangeAdmin";
 
 const router = createBrowserRouter([
   {
@@ -315,6 +316,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
            <Settings></Settings>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/manage-admin",
+        element: (
+          <PrivateRoute>
+           <MangeAdmin></MangeAdmin>
           </PrivateRoute>
         ),
       },

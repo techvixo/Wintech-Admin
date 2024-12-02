@@ -27,27 +27,27 @@ const QuickAccess = ({ dashboard }) => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm pt-3">
               <Link
                 to="/banner/home"
-                className="bg-green-500 text-white py-1 px-2 rounded-md hover:bg-green-600"
+                className="bg-green-500 text-white text-center py-1 px-2 rounded-md hover:bg-green-600"
               >
                 Change Banner
               </Link>
               <Link
                 to="/products/create"
-                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                className="bg-blue-500 text-white  text-center py-2 px-4 rounded-md hover:bg-blue-600"
               >
                 Create Products
               </Link>
               <Link
                 to="blog/create"
-                className="bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600"
+                className="bg-orange-500  text-center text-white py-2 px-4 rounded-md hover:bg-orange-600"
               >
                 Add New Blog Post
               </Link>
               <Link
-                to="portfolio/create"
-                className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800"
+                to="/settings"
+                className="bg-black text-white text-center py-2 px-4 rounded-md hover:bg-gray-800"
               >
-                New Portfolio
+                New Admin
               </Link>
             </div>
           </div>

@@ -1,34 +1,30 @@
-import { useState } from "react";
 import "./style.css";
+import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { RiDashboardFill } from "react-icons/ri";
-import { FaUsers } from "react-icons/fa";
+import { SiGoogleearthengine } from "react-icons/si";
 import { MdManageAccounts } from "react-icons/md";
-import { LuBookOpenCheck } from "react-icons/lu";
 import { IoLogoYoutube } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
-import { IoIosHelpCircleOutline } from "react-icons/io";
-import { IoAnalyticsOutline } from "react-icons/io5";
-import { SiSimpleanalytics } from "react-icons/si";
 import { TbLogout2 } from "react-icons/tb";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import { GiLoveSong } from "react-icons/gi";
-import { FaMusic } from "react-icons/fa";
+import { FaRegImage  } from "react-icons/fa";
+import { MdOutlineAddHome } from "react-icons/md";
+import { AiOutlineMessage } from "react-icons/ai";
+import { TfiWrite } from "react-icons/tfi";
+import { GoProject } from "react-icons/go";
 import logo from "../../../assets/logo/logo.png";
 
 const SideNavBar = () => {
   const navigation = useNavigate();
   const dashboard = <RiDashboardFill />;
-  const banner = <GiLoveSong />;
-  const products = <FaUsers />;
+  const banner = <FaRegImage  />;
+  const products = <SiGoogleearthengine />;
   const setting = <IoSettingsSharp />;
-  const home = <MdManageAccounts />;
-  const message = <LuBookOpenCheck />;
-  const blog = <IoLogoYoutube />;
-  const help = <IoIosHelpCircleOutline />;
-  const about = <IoAnalyticsOutline />;
-  const portfolio = <SiSimpleanalytics />;
-  const onboarding = <FaMusic />;
+  const home = <MdOutlineAddHome />;
+  const message = <AiOutlineMessage />;
+  const blog = <TfiWrite />;
+  const about = <MdManageAccounts />;
+  const portfolio = <GoProject />;
 
   const [menus] = useState([
     {
@@ -71,6 +67,11 @@ const SideNavBar = () => {
       path: "/message",
       icon: message,
     },
+    {
+      name: "Settings",
+      path: "/manage-admin",
+      icon: setting,
+    },
   ]);
   const handleLogOut = () => {
     localStorage.removeItem("token");
@@ -88,7 +89,7 @@ const SideNavBar = () => {
           </Link>
           <span className="text-white text-xl uppercase">Wintech</span>
         </div>
-        <div className=" flex flex-col gap-2 md:gap-4 mt-4 ">
+        <div className=" flex flex-col gap-0 md:gap-3 pt-4">
           {menus.map((menu, index) => (
             <div key={index} className="nav-main-menu">
               <NavLink to={menu.path} className={"dashboard-item"}>
