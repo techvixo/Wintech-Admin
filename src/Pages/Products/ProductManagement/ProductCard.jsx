@@ -5,6 +5,7 @@ import defaultImg from "../../../assets/default-img.png";
 import BASEURL from "../../../../Constants";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 
 const ProductCard = ({ product, fetchProducts, setIsDelete }) => {
   // console.log(product)
@@ -24,6 +25,12 @@ const ProductCard = ({ product, fetchProducts, setIsDelete }) => {
       : [defaultImg]
   );
   const [categories, setCategories] = useState([]);
+
+  const [deleteingSlider, setDeleteingSlider] = useState(null);
+  const cencelModal = () => {
+    setDeleteingSlider(null);
+  };
+
   const navigate = useNavigate();
   // console.log(imagePreviews)
   useEffect(() => {
@@ -97,11 +104,12 @@ const ProductCard = ({ product, fetchProducts, setIsDelete }) => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (deleteingSlider) => {
     try {
-      const response = await axios.delete(`${BASEURL}/product/delete/${id}`);
+      const response = await axios.delete(`${BASEURL}/product/delete/${deleteingSlider?._id}`);
       if (response.data.status === "success") {
         toast.success(response.data.message);
+        fetchProducts()
         setIsDelete(true)
       } else {
         toast.error("Failed to delete product.");
@@ -246,12 +254,23 @@ const ProductCard = ({ product, fetchProducts, setIsDelete }) => {
             >
               Edit
             </button>
-            <button
-              onClick={() => handleDelete(product._id)}
-              className="btn btn-outline btn-error btn-sm px-4"
-            >
-              Delete
-            </button>
+            <label
+                onClick={() => setDeleteingSlider(product)}
+                htmlFor="confirmation-modal"
+                className="btn btn-outline btn-error btn-sm px-4"
+              >
+                Remove
+              </label>
+            {deleteingSlider && (
+        <ConfirmationModal
+          title={`Are you sure you want to delete?`}
+          message={`If you delete ${deleteingSlider?.title_en}. It cannot be undon`}
+          closeModal={cencelModal}
+          successAction={handleDelete}
+          successButton={`Delete`}
+          modalData={deleteingSlider}
+        ></ConfirmationModal>
+      )}
           </div>
         </>
       )}
