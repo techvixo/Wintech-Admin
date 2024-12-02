@@ -85,7 +85,7 @@ const Contact = () => {
   if (isLoading) {
     return <Loader></Loader>;
   }
-  console.log(bannerData?.data)
+  // console.log(bannerData?.data)
   return (
     <div>
       {!bannerData?.data?.banner_image ? (
