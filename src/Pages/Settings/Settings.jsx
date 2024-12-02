@@ -115,11 +115,7 @@ console.log(response.data)
             </span>
           </div>
           <div className="profile_image w-28 h-28 rounded-full shadow overflow-hidden">
-            {/* <img
-              src={defaultImg}
-              alt="Current Preview"
-              className="w-full h-full shadow-md rounded-full object-cover"
-            /> */}
+        
             {/* Hidden File Input */}
             <input
               id="profileImageInput"

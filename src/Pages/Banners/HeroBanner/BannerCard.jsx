@@ -5,7 +5,7 @@ import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal"
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import BASEURL from "../../../../Constants";
-
+import { BiEdit } from "react-icons/bi";
 const BannerCard = ({ refetch, sliderInfo }) => {
   const {
     _id,
@@ -16,9 +16,7 @@ const BannerCard = ({ refetch, sliderInfo }) => {
     title_cn,
     title_en,
   } = sliderInfo;
-  const [editImgActive, setEditImgActive] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [profileImageFile, setProfileImageFile] = useState(null);
   const [deleteingSlider, setDeleteingSlider] = useState(null);
   const [titleEn, setTitleEn] = useState(title_en  || "");
   const [titleCn, setTitleCn] = useState(title_cn || "");
@@ -27,23 +25,21 @@ const BannerCard = ({ refetch, sliderInfo }) => {
   const [newLink, setNewLink] = useState(link || "");
   const [loader, setLoader] = useState(false);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedImage(file);
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      setPreviewImage(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-  const handleCloseNewImage = () => {
-    setPreviewImage(null);
-  };
   const cencelModal = () => {
     setDeleteingSlider(null);
   };
 
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImageFile(file);
+    }
+  };
+
+  const triggerFileInput = (id) => {
+    document.getElementById(`profileImageInput-${id}`).click();
+  };
   //============================================================
   // <<<<<<<<< Promotion slider Updated function here >>>>>>>>>>
   // ===========================================================
@@ -57,8 +53,8 @@ const BannerCard = ({ refetch, sliderInfo }) => {
     formData.append("description_cn", desCn);
     formData.append("link", newLink);
 
-    if (selectedImage) {
-      formData.append("image", selectedImage);
+    if (profileImageFile) {
+      formData.append("image", profileImageFile);
     }
     try {
       const response = await axios.patch(
@@ -78,9 +74,9 @@ const BannerCard = ({ refetch, sliderInfo }) => {
       return response.data;
     } catch (error) {
       console.log(error);
-      toast.error(`${error?.response?.data?.message}`);
+      // toast.error(`${error?.response?.data?.message}`);
       setLoader(false);
-      throw new Error(error?.response?.data?.message);
+      // throw new Error(error?.response?.data?.message);
     }
   };
 
@@ -118,79 +114,34 @@ const BannerCard = ({ refetch, sliderInfo }) => {
       setNewLink(sliderInfo?.link || "");
     }
   }, [sliderInfo]);
-  // console.log(sliderInfo);
+  console.log(sliderInfo);
   return (
     <form className="form w-full flex bg-white  shadow-md rounded-md p-5">
       <div className="md:w-1/4 w-full ">
-        <div className="flex items-center justify-center">
-          {/* <label htmlFor="image" className="mr-2">Select an image:</label> */}
+      <div className="profile_image w-full h-full py-5">
           <input
+            id={`profileImageInput-${_id}`}
             type="file"
-            id="image"
-            name="image"
             accept="image/*"
-            className="hidden input-fild bg-white  "
             onChange={handleImageChange}
+            className="hidden"
           />
-          <div className="flex items-center justify-start flex-col gap-1 w-full h-full rounded-md">
-            {editImgActive ? (
-              <div className="flex flex-col justify-center">
-                {previewImage ? (
-                  <img
-                    src={previewImage}
-                    alt="Selected Image"
-                    className="w-full h-full shadow mr-2 "
-                  />
-                ) : (
-                  <span className="mr-2 text-center text-xs font-semibold text-green-600"></span>
-                )}
-                {previewImage ? (
-                  <span
-                    className="text-xs text-center bg-green-300 py-1 px-2 rounded-xl cursor-pointer"
-                    onClick={() => document.getElementById("image").click()}
-                  >
-                    Change image
-                  </span>
-                ) : (
-                  <button
-                    type="button"
-                    className=" rounded-md text-4xl md:mt-2 px-12 py-12 flex items-center justify-center text-gray-500 bg-[#F9FAFD] border-dashed p-3"
-                    onClick={() => document.getElementById("image").click()}
-                  >
-                    <LuImagePlus />
-                  </button>
-                )}
-              </div>
-            ) : (
-              <div className="img p-2 relative w-full mt-1">
-                <span
-                  onClick={() => handleCloseNewImage()}
-                  className={`${previewImage ? "block" : "hidden"
-                    } absolute cursor-pointer right-0 top-4 w-5 h-5 rounded-full flex items-center justify-center bg-red-500 text-white`}
-                >
-                  <AiOutlineClose></AiOutlineClose>
-                </span>
-                <button
-                  type="button"
-                  className="w-full "
-                  onClick={() => document.getElementById("image").click()}
-                >
-                  {previewImage ? (
-                    <img
-                      src={previewImage}
-                      alt="Selected Image"
-                      className="w-full h-full shadow m-2 "
-                    />
-                  ) : (
-                    <img className="full" src={`${BASEURL}/${image}`} alt="" />
-                  )}
-                </button>
-                {/* <img className='full' src={image} alt="" />
-                                    <div className="flex justify-center">
-                                        <button onClick={handleEdinImgActive} type='button' className='btn btn-outline btn-primary btn-xs'>Change img</button>
-                                    </div> */}
-              </div>
-            )}
+          <div
+            className="profile_image relative w-full h-full cursor-pointer"
+            onClick={() => triggerFileInput(_id)}
+          >
+            <div className="absolute text-4xl hover:bg-[#0000004c] text-white top-0 left-0 w-full h-full flex items-center justify-center">
+              <BiEdit />
+            </div>
+            <img
+              src={
+                profileImageFile
+                  ? URL.createObjectURL(profileImageFile)
+                  : `${BASEURL}/${image}`
+              }
+              alt="Current Preview"
+              className="w-full h-full shadow-md object-cover"
+            />
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import editPortfolio from "../../../assets/overview/edit-portfolio.png";
 import { IoMdTime } from "react-icons/io";
 
 const QuickAccess = ({ dashboard }) => {
-  // console.log(dashboard);
+  console.log(dashboard);
   return (
     <div>
       <div className="pt-2">
@@ -47,7 +47,7 @@ const QuickAccess = ({ dashboard }) => {
                 to="/settings"
                 className="bg-black text-white text-center py-2 px-4 rounded-md hover:bg-gray-800"
               >
-                New Admin
+                Create Admin
               </Link>
             </div>
           </div>
