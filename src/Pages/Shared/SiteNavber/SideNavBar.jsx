@@ -87,7 +87,7 @@ const SideNavBar = () => {
           <Link to="/">
             <img src={logo} className=" w-24" alt="" />
           </Link>
-          <span className="text-white text-xl uppercase">Wintech</span>
+          <span className="text-white text-xl uppercase">Wintec</span>
         </div>
         <div className=" flex flex-col gap-0 md:gap-3 pt-4">
           {menus.map((menu, index) => (
