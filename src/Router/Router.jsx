@@ -329,25 +329,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: "/banner",
-  //   element: <PrivateRoute><BannerLayout></BannerLayout></PrivateRoute>,
-  //   children: [
-  //     {
-  //       path: "/banner",
-  //       element: <Banner></Banner>
-  //     },
-  //     {
-  //       path: "/banner/about",
-  //       element: <AboutBanner></AboutBanner>
-  //     },
-  //     {
-  //       path: "/banner/portfolio",
-  //       element: <Portfolio></Portfolio>
-  //     },
-
-  //   ]
-  // },
   {
     path: "/login",
     element: <SignIn></SignIn>,

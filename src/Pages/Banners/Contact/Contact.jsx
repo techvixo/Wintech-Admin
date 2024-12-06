@@ -44,7 +44,6 @@ const Contact = () => {
       formData.append("banner_image", selectedFile);
     }
 
-    // Reset the form or send `formData` to your API
     try {
       const response = await axios.post(
         `${BASEURL}/web-banner/create`,
@@ -56,7 +55,6 @@ const Contact = () => {
           },
         }
       );
-      // console.log("Banner created successfull:", response.data);
       toast.success(`Contact banner created successfull`, {
         position: "top-center",
         autoClose: 5000,
