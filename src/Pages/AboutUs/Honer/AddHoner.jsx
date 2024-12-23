@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 // import toast from "react-hot-toast";
 
-const AddPartner = () => {
+const AddHoner = () => {
   const [imagePreview, setImagePreview] = useState(null); // Replace with your default image URL
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const AddPartner = () => {
     }
   };
 
-  const handleAddPartner = async (e) => {
+  const handleAddHoner = async (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData();
@@ -54,12 +54,12 @@ const AddPartner = () => {
       <AboutMenu></AboutMenu>
 
       <h1 className="my-2 font-semibold text-xl text-[#344767] pt-7">
-        This form will be used to add or edit a Certificate information.
+        This form will be used to add a honer information.
       </h1>
       <div className="flex">
         <div className="w-1/3">
           <form
-            onSubmit={handleAddPartner}
+            onSubmit={handleAddHoner}
             className="flex flex-col gap-5 py-3"
           >
             {/*========== Product Basic=========== */}
@@ -98,7 +98,7 @@ const AddPartner = () => {
               />
             </div>
             <div className="flex items-center gap-3 py-2">
-              <Link to={"/about/partners"}>
+              <Link to={"/about/honer"}>
                 <button
                   type="button"
                   className="btn btn-outline btn-info btn-sm px-4"
@@ -133,4 +133,4 @@ const AddPartner = () => {
   );
 };
 
-export default AddPartner;
+export default AddHoner;

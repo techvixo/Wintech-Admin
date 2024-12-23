@@ -26,7 +26,13 @@ const AboutMenu = () => {
     title: "Partners",
     path: "/partners",
     icon: partner
-  }
+  },
+  {
+    id: 1,
+    title: "Honers",
+    path: "/honer",
+    icon: partner
+  },
 ]
   return (
     <div className='banner_menu'>

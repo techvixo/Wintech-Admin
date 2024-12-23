@@ -38,6 +38,11 @@ const SideNavBar = () => {
       icon: banner,
     },
     {
+      name: "Home Page",
+      path: "/home",
+      icon: home,
+    },
+    {
       name: "Products",
       path: "/products",
       icon: products,
@@ -56,11 +61,6 @@ const SideNavBar = () => {
       name: "Blog",
       path: "/blog",
       icon: blog,
-    },
-    {
-      name: "Home Page",
-      path: "/home",
-      icon: home,
     },
     {
       name: "Message",

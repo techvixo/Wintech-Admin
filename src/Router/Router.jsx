@@ -43,6 +43,10 @@ import AddMachine from "../Pages/HomePage/Machines/AddMachine";
 import FeaturedVideo from "../Pages/HomePage/FeaturedVideo/FeaturedVideo";
 import HeroBanner from "../Pages/Banners/HeroBanner/HeroBanner";
 import MangeAdmin from "../Pages/Settings/MangeAdmin";
+import EditHoner from "../Pages/AboutUs/Honer/EditHoner";
+import AddHoner from "../Pages/AboutUs/Honer/AddHoner";
+import Honers from "../Pages/AboutUs/Honer/Honers";
+import VideosPortfolio from "../Pages/Portfolios/VideosPortfolio";
 
 const router = createBrowserRouter([
   {
@@ -216,10 +220,42 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/about/honer",
+        element: (
+          <PrivateRoute>
+           <Honers></Honers>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about/honer/create",
+        element: (
+          <PrivateRoute>
+           <AddHoner></AddHoner>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about/honer/edit/:id",
+        element: (
+          <PrivateRoute>
+           <EditHoner></EditHoner>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/portfolio",
         element: (
           <PrivateRoute>
            <Portfolios></Portfolios>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/portfolio/videos",
+        element: (
+          <PrivateRoute>
+           <VideosPortfolio></VideosPortfolio>
           </PrivateRoute>
         ),
       },

@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import BASEURL from "../../../Constants";
 import Loader from "../Shared/Loader/Loader";
+import PortfolioMenu from "./PortfolioMenu";
 
 const Portfolios = () => {
   
@@ -36,10 +37,7 @@ const Portfolios = () => {
 
   return (
     <div className="p-5 bg-white rounded-md shadow-md">
-      <h5 className="text-[#344767] font-semibold text-lg my-3 capitalize">
-        This page should have a clean, organized layout for admins to easily
-        view, edit, or remove products.
-      </h5>
+      <PortfolioMenu></PortfolioMenu>
       <div className="flex justify-between items-end">
         {/* Search and Filter */}
         <SearchAndFilter></SearchAndFilter>
