@@ -32,7 +32,7 @@ const AddHoner = () => {
       formData.append("image", selectedFile);
     }
     try {
-      const response = await axios.post(`${BASEURL}/partner/create`, formData, {
+      const response = await axios.post(`${BASEURL}/honor/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ const AddHoner = () => {
       form.reset();
       setSelectedFile(null);
       setImagePreview(null);
-      navigate("/about/partners");
+      navigate("/about/honer");
     } catch (error) {
       console.log(error);
       toast.error(`${error.response?.data?.error}`);
@@ -86,14 +86,14 @@ const AddHoner = () => {
                 type="text"
                 name="name_en"
                 required
-                placeholder="Certificate Name in English"
+                placeholder="Honer Name in English"
                 className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
               />
               <input
                 type="text"
                 name="name_cn"
                 required
-                placeholder="Certificate Name in Chines"
+                placeholder="Honer Name in Chines"
                 className="font-semibold text-[#7B809A] text-sm bg-[#F8F8F8] p-2 px-3 rounded-sm "
               />
             </div>

@@ -17,7 +17,7 @@ const HonerCard = ({certificate, refetch}) => {
     // ===========================================================
     const handleDeletePartner = async (certificate) => {
       try {
-          const response = await axios.delete(`${BASEURL}/partner/delete/${certificate?._id}`, {
+          const response = await axios.delete(`${BASEURL}/honor/delete/${certificate?._id}`, {
               headers: {
                   Authorization:  localStorage.getItem("token")
               }

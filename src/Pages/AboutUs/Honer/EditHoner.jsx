@@ -27,9 +27,9 @@ const EditHoner = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["partner-data"],
+    queryKey: ["honer-data"],
     queryFn: async () => {
-      const response = await axios.get(`${BASEURL}/partner/${id}`, {
+      const response = await axios.get(`${BASEURL}/honor/${id}`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ const EditHoner = () => {
       }
 
       await axios.patch(
-        `${BASEURL}/partner/update/${honersData?.data?._id}`,
+        `${BASEURL}/honor/update/${honersData?.data?._id}`,
         formData,
         {
           headers: {

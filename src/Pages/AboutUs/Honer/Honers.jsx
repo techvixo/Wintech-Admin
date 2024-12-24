@@ -9,15 +9,15 @@ import Loader from "../../Shared/Loader/Loader";
 import HonerCard from "./HonerCard";
 
 const Honers = () => {
-  // <<<<<<<<< Certificate Data Recived Here.. >>>>>>>>>>
+  // <<<<<<<<< Honers Data Recived Here.. >>>>>>>>>>
   const {
-    data: partnerData = [],
+    data: honersData = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["partner-data"],
+    queryKey: ["honer-data"],
     queryFn: async () => {
-      const response = await axios.get(`${BASEURL}/partner/all`, {
+      const response = await axios.get(`${BASEURL}/honor/all`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -32,7 +32,7 @@ const Honers = () => {
     return <Loader></Loader>;
   }
 
-  // console.log(partnerData.data);
+  // console.log(honersData.data);
   return (
     <div className="p-5 bg-white rounded-md shadow-md">
       <AboutMenu></AboutMenu>
@@ -58,9 +58,9 @@ const Honers = () => {
       </div>
 
       {/* Product Cards */}
-      {partnerData?.data?.length > 0 ? (
+      {honersData?.data?.length > 0 ? (
         <div className="grid grid-cols-3 gap-4 mb-6 my-4">
-          {partnerData?.data?.map((team, i) => {
+          {honersData?.data?.map((team, i) => {
             return <HonerCard
              key={i}
               certificate={team}
